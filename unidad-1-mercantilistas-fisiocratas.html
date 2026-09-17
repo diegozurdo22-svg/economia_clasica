@@ -1,0 +1,1668 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Entrenador Académico UNLa | Mercantilistas y Fisiócratas</title>
+
+<!-- ============================================================
+     TIPOGRAFÍAS: Cinzel (títulos, identidad clásica-universitaria)
+     e Inter (contenido, legibilidad moderna). Con fallback local
+     por si no hay conexión al cargar el archivo.
+     ============================================================ -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+/* =====================================================================
+   ENTRENADOR ACADÉMICO UNLa
+   Hoja de estilos única — Sistema de diseño académico-tecnológico
+   Paleta institucional: Azul UNLa / Cian tecnológico / Dorado destaque
+   ===================================================================== */
+
+:root{
+  /* --- Paleta institucional (fija por consigna) --- */
+  --color-primary:      #003B70;
+  --color-primary-dark: #00284d;
+  --color-primary-soft: #0b4d86;
+  --color-secondary:    #00A8CC;
+  --color-accent:       #FFC857;
+  --color-bg:           #F8FAFC;
+  --color-text:         #1E293B;
+
+  /* --- Derivados de la paleta (mismos tonos, distinta opacidad/mezcla) --- */
+  --color-text-soft:    #47566b;
+  --color-text-faint:   #7c8aa0;
+  --color-surface:      #ffffff;
+  --color-surface-alt:  #eef4fa;
+  --color-border:       #e1e9f2;
+  --color-success:      #0f9d58;
+  --color-success-bg:   #e7f7ee;
+  --color-error:        #d64545;
+  --color-error-bg:     #fdecec;
+
+  /* --- Tipografía --- */
+  --font-title: 'Cinzel', 'Iowan Old Style', Georgia, serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  /* --- Geometría --- */
+  --radius-lg: 22px;
+  --radius-md: 14px;
+  --radius-sm: 9px;
+  --shadow-card: 0 20px 45px -18px rgba(0, 59, 112, 0.28), 0 2px 8px rgba(0,59,112,0.06);
+  --shadow-soft: 0 8px 20px -10px rgba(0, 59, 112, 0.18);
+  --shadow-btn:  0 10px 22px -10px rgba(0, 59, 112, 0.35);
+  --max-width: 880px;
+}
+
+*, *::before, *::after{ box-sizing:border-box; }
+
+html{ scroll-behavior:smooth; }
+
+body{
+  margin:0;
+  min-height:100vh;
+  font-family:var(--font-body);
+  color:var(--color-text);
+  background:var(--color-bg);
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+
+img, svg{ display:block; max-width:100%; }
+
+button{ font-family:inherit; cursor:pointer; }
+
+/* =====================================================================
+   1. FONDO — degradados suaves + geometría sutil + referencia arquitectónica
+   ===================================================================== */
+
+.bg-layer{
+  position:fixed;
+  inset:0;
+  z-index:-3;
+  background:
+    radial-gradient(circle at 12% 8%,  rgba(0,168,204,0.10), transparent 40%),
+    radial-gradient(circle at 92% 18%, rgba(255,200,87,0.14), transparent 38%),
+    radial-gradient(circle at 80% 92%, rgba(0,59,112,0.08),  transparent 45%),
+    radial-gradient(circle at 6% 85%,  rgba(0,168,204,0.09), transparent 40%),
+    linear-gradient(180deg, #f3f7fc 0%, var(--color-bg) 38%, #f2f6fb 100%);
+}
+
+/* Textura tipo "plano arquitectónico": grilla de puntos muy sutil */
+.bg-grid{
+  position:fixed;
+  inset:0;
+  z-index:-2;
+  opacity:0.55;
+  background-image: radial-gradient(rgba(0,59,112,0.09) 1px, transparent 1px);
+  background-size: 26px 26px;
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 20%, black 40%, transparent 90%);
+}
+
+/* Franja diagonal decorativa que evoca un frontón / entablamento clásico */
+.bg-pediment{
+  position:fixed;
+  top:0; left:0; right:0;
+  height:38vh;
+  z-index:-2;
+  pointer-events:none;
+  background:
+    linear-gradient(115deg, rgba(0,59,112,0.05) 0%, transparent 55%),
+    linear-gradient(245deg, rgba(0,168,204,0.06) 0%, transparent 55%);
+}
+
+/* =====================================================================
+   2. COLUMNAS GRIEGAS DECORATIVAS — laterales, semitransparentes, no invasivas
+   ===================================================================== */
+
+.greek-columns{
+  position:fixed;
+  top:0;
+  bottom:0;
+  width:min(15vw, 210px);
+  z-index:-1;
+  pointer-events:none;
+  opacity:0.55;
+  display:flex;
+  align-items:flex-end;
+  justify-content:center;
+}
+.greek-columns.left{ left:0; }
+.greek-columns.right{ right:0; transform:scaleX(-1); }
+.greek-columns svg{ height:100%; width:auto; }
+
+@media (max-width: 1180px){
+  .greek-columns{ opacity:0.32; width:min(11vw, 140px); }
+}
+@media (max-width: 880px){
+  .greek-columns{ display:none; } /* decorativas, no invasivas en pantallas chicas */
+}
+
+/* =====================================================================
+   3. LAYOUT GENERAL
+   ===================================================================== */
+
+.app-shell{
+  position:relative;
+  z-index:1;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+}
+
+.container{
+  width:100%;
+  max-width:var(--max-width);
+  margin:0 auto;
+  padding:0 20px;
+}
+
+/* =====================================================================
+   4. ENCABEZADO
+   ===================================================================== */
+
+.site-header{
+  position:relative;
+  background:
+    linear-gradient(120deg, var(--color-primary) 0%, var(--color-primary-soft) 62%, #075c8a 100%);
+  color:#fff;
+  padding:26px 0 30px;
+  box-shadow:0 12px 30px -14px rgba(0,59,112,0.55);
+}
+
+.site-header::after{
+  /* borde inferior tipo "moldura" académica */
+  content:"";
+  position:absolute;
+  left:0; right:0; bottom:0;
+  height:5px;
+  background:linear-gradient(90deg, var(--color-accent) 0%, var(--color-secondary) 55%, var(--color-accent) 100%);
+  opacity:0.9;
+}
+
+.header-inner{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+}
+
+.header-text .eyebrow{
+  font-family:var(--font-body);
+  font-size:12.5px;
+  letter-spacing:0.16em;
+  text-transform:uppercase;
+  color:rgba(255,255,255,0.72);
+  margin:0 0 6px;
+  font-weight:600;
+}
+
+.header-text h1{
+  font-family:var(--font-title);
+  font-weight:700;
+  font-size:clamp(1.5rem, 3.2vw, 2.35rem);
+  margin:0;
+  letter-spacing:0.015em;
+  line-height:1.15;
+  text-shadow:0 2px 14px rgba(0,0,0,0.15);
+}
+
+.header-text p.subtitle{
+  margin:8px 0 0;
+  font-size:14.5px;
+  color:rgba(255,255,255,0.82);
+  font-weight:500;
+}
+
+/* --- Logo institucional (esquina superior derecha) --- */
+.logo-badge{
+  flex-shrink:0;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  background:rgba(255,255,255,0.08);
+  border:1px solid rgba(255,255,255,0.22);
+  padding:8px 16px 8px 8px;
+  border-radius:100px;
+  backdrop-filter:blur(6px);
+}
+
+.logo-badge .logo-mark{
+  width:46px;
+  height:46px;
+  border-radius:50%;
+  background:radial-gradient(circle at 32% 28%, #ffffff 0%, #eaf6fb 38%, var(--color-secondary) 100%);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow:0 4px 14px rgba(0,0,0,0.25), inset 0 0 0 2px rgba(255,255,255,0.6);
+  flex-shrink:0;
+}
+
+.logo-badge .logo-mark svg{ width:30px; height:30px; }
+
+.logo-badge .logo-text{
+  line-height:1.15;
+  display:flex;
+  flex-direction:column;
+}
+.logo-badge .logo-text strong{
+  font-family:var(--font-title);
+  font-size:14px;
+  letter-spacing:0.03em;
+}
+.logo-badge .logo-text span{
+  font-size:10px;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  color:rgba(255,255,255,0.7);
+}
+
+@media (max-width: 620px){
+  .header-inner{ flex-direction:column; align-items:flex-start; }
+  .logo-badge{ align-self:flex-end; }
+}
+
+/* =====================================================================
+   5. BARRA DE PROGRESO Y ESTADÍSTICAS EN VIVO
+   ===================================================================== */
+
+.progress-panel{
+  position:sticky;
+  top:0;
+  z-index:20;
+  background:rgba(248,250,252,0.86);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--color-border);
+  padding:14px 0;
+  display:none; /* se muestra solo durante el quiz */
+}
+.progress-panel.visible{ display:block; }
+
+.progress-top-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  margin-bottom:9px;
+  flex-wrap:wrap;
+}
+
+.progress-status{
+  font-size:13.5px;
+  font-weight:700;
+  color:var(--color-primary);
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.progress-status .pct{
+  color:var(--color-text-faint);
+  font-weight:600;
+}
+
+.stat-chips{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+}
+
+.chip{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  font-size:12.5px;
+  font-weight:700;
+  padding:5px 11px;
+  border-radius:100px;
+  background:var(--color-surface);
+  border:1px solid var(--color-border);
+  color:var(--color-text-soft);
+}
+.chip.correct{ color:var(--color-success); background:var(--color-success-bg); border-color:transparent; }
+.chip.incorrect{ color:var(--color-error); background:var(--color-error-bg); border-color:transparent; }
+.chip.streak{ color:#9a6a00; background:#fff5df; border-color:transparent; }
+
+.progress-track{
+  width:100%;
+  height:10px;
+  border-radius:100px;
+  background:var(--color-surface-alt);
+  overflow:hidden;
+  box-shadow:inset 0 1px 3px rgba(0,59,112,0.12);
+}
+.progress-fill{
+  height:100%;
+  width:0%;
+  border-radius:100px;
+  background:linear-gradient(90deg, var(--color-secondary), var(--color-accent));
+  transition:width 0.55s cubic-bezier(.4,0,.2,1);
+  position:relative;
+}
+.progress-fill::after{
+  content:"";
+  position:absolute; inset:0;
+  background:linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
+  animation:shimmer 2.2s infinite;
+}
+@keyframes shimmer{
+  0%{ transform:translateX(-100%); }
+  100%{ transform:translateX(100%); }
+}
+
+/* =====================================================================
+   6. CONTENIDO PRINCIPAL / PANTALLAS
+   ===================================================================== */
+
+main{
+  flex:1;
+  padding:38px 0 70px;
+}
+
+.screen{ display:none; animation:fadeUp 0.5s ease both; }
+.screen.active{ display:block; }
+
+@keyframes fadeUp{
+  from{ opacity:0; transform:translateY(14px); }
+  to{ opacity:1; transform:translateY(0); }
+}
+
+/* --- Pantalla de inicio --- */
+.hero-card{
+  background:var(--color-surface);
+  border-radius:var(--radius-lg);
+  box-shadow:var(--shadow-card);
+  padding:clamp(28px, 5vw, 52px);
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+  border:1px solid var(--color-border);
+}
+.hero-card::before{
+  content:"";
+  position:absolute;
+  top:-60px; right:-60px;
+  width:220px; height:220px;
+  border-radius:50%;
+  background:radial-gradient(circle, rgba(0,168,204,0.16), transparent 70%);
+}
+.hero-card::after{
+  content:"";
+  position:absolute;
+  bottom:-70px; left:-70px;
+  width:220px; height:220px;
+  border-radius:50%;
+  background:radial-gradient(circle, rgba(255,200,87,0.20), transparent 70%);
+}
+
+.hero-kicker{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  font-size:12.5px;
+  font-weight:700;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  color:var(--color-secondary);
+  background:#e7f8fc;
+  padding:7px 14px;
+  border-radius:100px;
+  margin-bottom:18px;
+}
+
+.hero-card h2{
+  font-family:var(--font-title);
+  font-size:clamp(1.7rem, 4vw, 2.5rem);
+  color:var(--color-primary);
+  margin:0 0 14px;
+  line-height:1.2;
+}
+
+.hero-card p.lead{
+  font-size:16px;
+  color:var(--color-text-soft);
+  max-width:560px;
+  margin:0 auto 30px;
+  line-height:1.65;
+}
+
+.hero-stats{
+  display:grid;
+  grid-template-columns:repeat(3, 1fr);
+  gap:14px;
+  max-width:520px;
+  margin:0 auto 34px;
+  position:relative;
+}
+.hero-stat{
+  background:var(--color-surface-alt);
+  border-radius:var(--radius-md);
+  padding:16px 10px;
+  border:1px solid var(--color-border);
+}
+.hero-stat strong{
+  display:block;
+  font-family:var(--font-title);
+  font-size:1.55rem;
+  color:var(--color-primary);
+}
+.hero-stat span{
+  font-size:11.5px;
+  color:var(--color-text-faint);
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:0.04em;
+}
+
+.topics-list{
+  text-align:left;
+  max-width:560px;
+  margin:0 auto 34px;
+  display:grid;
+  gap:9px;
+  position:relative;
+}
+.topic-row{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-size:13.5px;
+  color:var(--color-text-soft);
+  background:var(--color-surface-alt);
+  border-radius:10px;
+  padding:9px 13px;
+}
+.topic-row .topic-dot{
+  width:9px; height:9px; border-radius:50%;
+  background:var(--color-secondary);
+  flex-shrink:0;
+}
+
+/* --- Botón principal (CTA) --- */
+.btn{
+  border:none;
+  border-radius:100px;
+  padding:15px 34px;
+  font-weight:700;
+  font-size:15.5px;
+  letter-spacing:0.01em;
+  display:inline-flex;
+  align-items:center;
+  gap:9px;
+  transition:transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease;
+}
+.btn:active{ transform:translateY(1px) scale(0.98); }
+
+.btn-primary{
+  color:#fff;
+  background:linear-gradient(120deg, var(--color-primary) 0%, var(--color-primary-soft) 100%);
+  box-shadow:var(--shadow-btn);
+}
+.btn-primary:hover{ filter:brightness(1.08); transform:translateY(-2px); }
+
+.btn-accent{
+  color:#5b3d00;
+  background:linear-gradient(120deg, #ffd581 0%, var(--color-accent) 100%);
+  box-shadow:0 10px 22px -10px rgba(255,200,87,0.55);
+}
+.btn-accent:hover{ filter:brightness(1.05); transform:translateY(-2px); }
+
+.btn-ghost{
+  color:var(--color-primary);
+  background:var(--color-surface);
+  border:1.5px solid var(--color-border);
+}
+.btn-ghost:hover{ border-color:var(--color-secondary); color:var(--color-secondary); }
+
+.btn:disabled{
+  opacity:0.45;
+  cursor:not-allowed;
+  transform:none !important;
+  filter:none !important;
+}
+
+/* --- Tarjeta de pregunta --- */
+.question-card{
+  background:var(--color-surface);
+  border-radius:var(--radius-lg);
+  box-shadow:var(--shadow-card);
+  border:1px solid var(--color-border);
+  padding:clamp(24px, 4.5vw, 40px);
+  position:relative;
+  overflow:hidden;
+}
+.question-card::before{
+  content:"";
+  position:absolute;
+  top:0; left:0; right:0;
+  height:6px;
+  background:linear-gradient(90deg, var(--part-color-a, var(--color-primary)), var(--part-color-b, var(--color-secondary)));
+}
+
+.card-meta{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-bottom:18px;
+}
+
+.meta-badge{
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  font-size:11.5px;
+  font-weight:700;
+  letter-spacing:0.04em;
+  text-transform:uppercase;
+  padding:6px 13px;
+  border-radius:100px;
+  background:var(--color-surface-alt);
+  color:var(--color-primary);
+  border:1px solid var(--color-border);
+}
+
+.type-badge{
+  font-size:11.5px;
+  font-weight:700;
+  padding:6px 13px;
+  border-radius:100px;
+  background:#eaf9fc;
+  color:#026b85;
+}
+
+.question-number{
+  font-family:var(--font-title);
+  font-size:13px;
+  color:var(--color-text-faint);
+  font-weight:600;
+  margin-bottom:8px;
+  letter-spacing:0.02em;
+}
+
+.question-text{
+  font-size:clamp(1.08rem, 2.4vw, 1.32rem);
+  font-weight:700;
+  line-height:1.5;
+  color:var(--color-text);
+  margin:0 0 26px;
+}
+
+.multi-hint{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  font-size:12.5px;
+  color:#9a6a00;
+  background:#fff8e8;
+  border:1px solid #ffe8b0;
+  padding:6px 12px;
+  border-radius:9px;
+  margin:-14px 0 20px;
+  font-weight:600;
+}
+
+/* --- Opciones de respuesta --- */
+.options{
+  display:grid;
+  gap:12px;
+  margin-bottom:8px;
+}
+
+.option-btn{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  width:100%;
+  text-align:left;
+  background:var(--color-surface);
+  border:1.75px solid var(--color-border);
+  border-radius:var(--radius-md);
+  padding:14px 16px;
+  font-size:14.5px;
+  font-weight:500;
+  color:var(--color-text);
+  transition:border-color 0.16s ease, transform 0.12s ease, background 0.16s ease, box-shadow 0.16s ease;
+  line-height:1.45;
+}
+.option-btn:hover:not(:disabled){
+  border-color:var(--color-secondary);
+  background:#f5fcfe;
+  transform:translateY(-1px);
+  box-shadow:0 8px 18px -12px rgba(0,168,204,0.45);
+}
+.option-btn:disabled{ cursor:default; }
+
+.option-letter{
+  flex-shrink:0;
+  width:32px;
+  height:32px;
+  border-radius:9px;
+  background:var(--color-surface-alt);
+  color:var(--color-primary);
+  font-family:var(--font-title);
+  font-weight:700;
+  font-size:14px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition:background 0.16s ease, color 0.16s ease;
+}
+
+.option-text{ flex:1; }
+
+.option-icon{
+  flex-shrink:0;
+  width:22px;
+  height:22px;
+  opacity:0;
+  transform:scale(0.6);
+  transition:opacity 0.16s ease, transform 0.16s ease;
+}
+
+/* Estado: seleccionada (previo a confirmar, solo multi) */
+.option-btn.picked{
+  border-color:var(--color-secondary);
+  background:#eefbfd;
+}
+.option-btn.picked .option-letter{
+  background:var(--color-secondary);
+  color:#fff;
+}
+
+/* Estado: correcta (tras responder) */
+.option-btn.is-correct{
+  border-color:var(--color-success);
+  background:var(--color-success-bg);
+}
+.option-btn.is-correct .option-letter{ background:var(--color-success); color:#fff; }
+.option-btn.is-correct .option-icon{ opacity:1; transform:scale(1); }
+
+/* Estado: incorrecta y elegida (tras responder) */
+.option-btn.is-wrong{
+  border-color:var(--color-error);
+  background:var(--color-error-bg);
+}
+.option-btn.is-wrong .option-letter{ background:var(--color-error); color:#fff; }
+.option-btn.is-wrong .option-icon{ opacity:1; transform:scale(1); }
+
+/* Estado: atenuada (no elegida, no correcta) */
+.option-btn.is-dim{ opacity:0.55; }
+
+@keyframes correctPulse{
+  0%{ box-shadow:0 0 0 0 rgba(15,157,88,0.35); }
+  70%{ box-shadow:0 0 0 14px rgba(15,157,88,0); }
+  100%{ box-shadow:0 0 0 0 rgba(15,157,88,0); }
+}
+.option-btn.is-correct.pulse{ animation:correctPulse 0.7s ease-out; }
+
+@keyframes shakeX{
+  10%,90%{ transform:translateX(-1px); }
+  20%,80%{ transform:translateX(2px); }
+  30%,50%,70%{ transform:translateX(-4px); }
+  40%,60%{ transform:translateX(4px); }
+}
+.option-btn.is-wrong.shake{ animation:shakeX 0.5s; }
+
+/* --- Botón confirmar (multi-selección) --- */
+.confirm-row{
+  display:flex;
+  justify-content:flex-end;
+  margin-top:6px;
+}
+
+/* --- Panel de retroalimentación --- */
+.feedback-panel{
+  margin-top:22px;
+  border-radius:var(--radius-md);
+  padding:18px 20px;
+  display:none;
+  animation:fadeUp 0.4s ease both;
+}
+.feedback-panel.show{ display:block; }
+.feedback-panel.correct{ background:var(--color-success-bg); border:1px solid #bfe8cf; }
+.feedback-panel.incorrect{ background:var(--color-error-bg); border:1px solid #f3c6c6; }
+
+.feedback-title{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  font-family:var(--font-title);
+  font-weight:700;
+  font-size:16px;
+  margin-bottom:8px;
+}
+.feedback-panel.correct .feedback-title{ color:var(--color-success); }
+.feedback-panel.incorrect .feedback-title{ color:var(--color-error); }
+
+.feedback-explanation{
+  font-size:13.75px;
+  line-height:1.6;
+  color:var(--color-text-soft);
+  border-left:3px solid rgba(0,59,112,0.18);
+  padding-left:12px;
+}
+.feedback-explanation strong{ color:var(--color-text); }
+
+.next-row{
+  display:flex;
+  justify-content:flex-end;
+  margin-top:24px;
+}
+
+/* =====================================================================
+   7. PANTALLA DE RESULTADOS
+   ===================================================================== */
+
+.results-card{
+  background:var(--color-surface);
+  border-radius:var(--radius-lg);
+  box-shadow:var(--shadow-card);
+  border:1px solid var(--color-border);
+  padding:clamp(28px, 5vw, 52px);
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+}
+
+.results-medal{
+  width:96px; height:96px;
+  margin:0 auto 18px;
+  border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  background:radial-gradient(circle at 35% 30%, #fff8e2, var(--color-accent) 75%);
+  box-shadow:0 14px 30px -10px rgba(255,200,87,0.55);
+}
+.results-medal svg{ width:50px; height:50px; }
+
+/* Variantes de medalla según el nivel de desempeño */
+.results-medal.medal-gold{
+  background:radial-gradient(circle at 35% 30%, #fff8e2, var(--color-accent) 75%);
+  box-shadow:0 14px 30px -10px rgba(255,200,87,0.6);
+}
+.results-medal.medal-silver{
+  background:radial-gradient(circle at 35% 30%, #f4f8fb, #b9c8d6 75%);
+  box-shadow:0 14px 30px -10px rgba(120,140,160,0.5);
+}
+.results-medal.medal-bronze{
+  background:radial-gradient(circle at 35% 30%, #f9e3cf, #cb8a53 75%);
+  box-shadow:0 14px 30px -10px rgba(180,120,70,0.5);
+}
+.results-medal.medal-book{
+  background:radial-gradient(circle at 35% 30%, #eaf4fa, var(--color-secondary) 88%);
+  box-shadow:0 14px 30px -10px rgba(0,168,204,0.45);
+}
+
+.score-ring-wrap{
+  position:relative;
+  width:180px; height:180px;
+  margin:0 auto 22px;
+}
+.score-ring-wrap svg{ width:100%; height:100%; transform:rotate(-90deg); }
+.score-ring-bg{ fill:none; stroke:var(--color-surface-alt); stroke-width:14; }
+.score-ring-fill{
+  fill:none;
+  stroke:url(#ringGradient);
+  stroke-width:14;
+  stroke-linecap:round;
+  stroke-dasharray:502.4;
+  stroke-dashoffset:502.4;
+  transition:stroke-dashoffset 1.1s cubic-bezier(.4,0,.2,1);
+}
+.score-ring-center{
+  position:absolute; inset:0;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+}
+.score-ring-center strong{
+  font-family:var(--font-title);
+  font-size:2.3rem;
+  color:var(--color-primary);
+  line-height:1;
+}
+.score-ring-center span{
+  font-size:11.5px;
+  color:var(--color-text-faint);
+  text-transform:uppercase;
+  letter-spacing:0.05em;
+  font-weight:700;
+  margin-top:4px;
+}
+
+.results-title{
+  font-family:var(--font-title);
+  font-size:clamp(1.5rem, 3.6vw, 2rem);
+  color:var(--color-primary);
+  margin:4px 0 10px;
+}
+
+.results-message{
+  font-size:15px;
+  color:var(--color-text-soft);
+  max-width:520px;
+  margin:0 auto 28px;
+  line-height:1.65;
+}
+
+.results-grid{
+  display:grid;
+  grid-template-columns:repeat(3, 1fr);
+  gap:14px;
+  max-width:540px;
+  margin:0 auto 30px;
+}
+.results-stat{
+  background:var(--color-surface-alt);
+  border-radius:var(--radius-md);
+  padding:16px 8px;
+  border:1px solid var(--color-border);
+}
+.results-stat strong{
+  display:block;
+  font-family:var(--font-title);
+  font-size:1.6rem;
+}
+.results-stat.correct strong{ color:var(--color-success); }
+.results-stat.incorrect strong{ color:var(--color-error); }
+.results-stat.streak strong{ color:#a6720a; }
+.results-stat span{
+  font-size:11px;
+  color:var(--color-text-faint);
+  text-transform:uppercase;
+  font-weight:700;
+  letter-spacing:0.03em;
+}
+
+.results-actions{
+  display:flex;
+  gap:12px;
+  justify-content:center;
+  flex-wrap:wrap;
+  margin-bottom:8px;
+}
+
+/* --- Repaso de errores --- */
+.review-wrap{
+  text-align:left;
+  max-width:660px;
+  margin:26px auto 0;
+  display:none;
+}
+.review-wrap.show{ display:block; }
+.review-item{
+  background:var(--color-surface-alt);
+  border:1px solid var(--color-border);
+  border-radius:var(--radius-md);
+  padding:16px 18px;
+  margin-bottom:12px;
+}
+.review-item .rq{ font-weight:700; font-size:14px; margin-bottom:9px; }
+.review-item .ra{ font-size:13px; margin-bottom:4px; color:var(--color-text-soft); }
+.review-item .ra.wrong-answer{ color:var(--color-error); }
+.review-item .ra.right-answer{ color:var(--color-success); }
+.review-item .re{ font-size:12.75px; color:var(--color-text-faint); margin-top:8px; line-height:1.55; }
+
+/* =====================================================================
+   8. FOOTER
+   ===================================================================== */
+
+.site-footer{
+  text-align:center;
+  padding:26px 20px 40px;
+  font-size:12px;
+  color:var(--color-text-faint);
+}
+.site-footer strong{ color:var(--color-text-soft); }
+
+/* =====================================================================
+   9. CONFETI (celebración elegante, sin librerías externas)
+   ===================================================================== */
+
+.confetti-layer{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:200;
+  overflow:hidden;
+}
+.confetti-piece{
+  position:absolute;
+  top:-20px;
+  width:8px;
+  height:14px;
+  opacity:0.95;
+  border-radius:2px;
+  animation-name:confettiFall;
+  animation-timing-function:cubic-bezier(.25,.46,.45,.94);
+  animation-fill-mode:forwards;
+}
+@keyframes confettiFall{
+  0%{ transform:translateY(0) rotate(0deg); opacity:1; }
+  100%{ transform:translateY(105vh) rotate(540deg); opacity:0; }
+}
+
+/* =====================================================================
+   10. UTILIDADES / ACCESIBILIDAD / RESPONSIVE
+   ===================================================================== */
+
+.sr-only{
+  position:absolute; width:1px; height:1px;
+  padding:0; margin:-1px; overflow:hidden;
+  clip:rect(0,0,0,0); white-space:nowrap; border:0;
+}
+
+:focus-visible{
+  outline:3px solid var(--color-secondary);
+  outline-offset:2px;
+}
+
+@media (max-width: 600px){
+  .hero-stats{ grid-template-columns:1fr 1fr; }
+  .results-grid{ grid-template-columns:1fr; }
+  .btn{ padding:13px 24px; font-size:14.5px; }
+  main{ padding:26px 0 50px; }
+  .question-card, .hero-card, .results-card{ border-radius:16px; }
+}
+
+@media (min-width: 601px) and (max-width: 880px){
+  .hero-stats{ grid-template-columns:repeat(3,1fr); }
+}
+</style>
+</head>
+<body>
+<a href="index.html" style="position:fixed;top:10px;left:10px;z-index:99999;font-family:Georgia,'Times New Roman',serif;font-size:13px;letter-spacing:.02em;background:#23201B;color:#EDE3CC;padding:7px 14px;border-radius:3px;text-decoration:none;box-shadow:0 3px 10px rgba(0,0,0,.35);opacity:.88;">&larr; Índice del curso</a>
+
+<!-- Fondo decorativo (no interactivo) -->
+<div class="bg-layer" aria-hidden="true"></div>
+<div class="bg-pediment" aria-hidden="true"></div>
+<div class="bg-grid" aria-hidden="true"></div>
+
+<!-- Columnas griegas laterales decorativas -->
+<div class="greek-columns left" aria-hidden="true">
+  <svg viewBox="0 0 120 640" preserveAspectRatio="xMidYMax meet">
+    <g fill="#003B70">
+      <!-- base -->
+      <rect x="10" y="612" width="100" height="16" rx="2"/>
+      <rect x="20" y="596" width="80" height="14" rx="2"/>
+      <!-- fuste con estrías -->
+      <rect x="34" y="120" width="52" height="476" rx="3"/>
+      <g stroke="#F8FAFC" stroke-width="2" opacity="0.5">
+        <line x1="44" y1="120" x2="44" y2="596"/>
+        <line x1="54" y1="120" x2="54" y2="596"/>
+        <line x1="60" y1="120" x2="60" y2="596"/>
+        <line x1="66" y1="120" x2="66" y2="596"/>
+        <line x1="76" y1="120" x2="76" y2="596"/>
+      </g>
+      <!-- capitel jónico simplificado -->
+      <rect x="18" y="96" width="84" height="18" rx="3"/>
+      <circle cx="30" cy="94" r="12"/>
+      <circle cx="90" cy="94" r="12"/>
+      <rect x="24" y="80" width="72" height="16" rx="4"/>
+      <rect x="6" y="74" width="108" height="10" rx="3"/>
+    </g>
+  </svg>
+</div>
+<div class="greek-columns right" aria-hidden="true">
+  <svg viewBox="0 0 120 640" preserveAspectRatio="xMidYMax meet">
+    <g fill="#003B70">
+      <rect x="10" y="612" width="100" height="16" rx="2"/>
+      <rect x="20" y="596" width="80" height="14" rx="2"/>
+      <rect x="34" y="120" width="52" height="476" rx="3"/>
+      <g stroke="#F8FAFC" stroke-width="2" opacity="0.5">
+        <line x1="44" y1="120" x2="44" y2="596"/>
+        <line x1="54" y1="120" x2="54" y2="596"/>
+        <line x1="60" y1="120" x2="60" y2="596"/>
+        <line x1="66" y1="120" x2="66" y2="596"/>
+        <line x1="76" y1="120" x2="76" y2="596"/>
+      </g>
+      <rect x="18" y="96" width="84" height="18" rx="3"/>
+      <circle cx="30" cy="94" r="12"/>
+      <circle cx="90" cy="94" r="12"/>
+      <rect x="24" y="80" width="72" height="16" rx="4"/>
+      <rect x="6" y="74" width="108" height="10" rx="3"/>
+    </g>
+  </svg>
+</div>
+
+<div class="app-shell">
+
+  <!-- ===================== ENCABEZADO ===================== -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="header-text">
+        <p class="eyebrow">Universidad Nacional de Lanús · Historia del Pensamiento Económico</p>
+        <h1>Entrenador Académico UNLa</h1>
+        <p class="subtitle">Mercantilistas y Fisiócratas — Práctica interactiva de cátedra</p>
+      </div>
+      <div class="logo-badge" title="Universidad Nacional de Lanús">
+        <span class="logo-mark">
+          <!-- Monograma institucional UNLa (marca de referencia, en la paleta oficial) -->
+          <svg viewBox="0 0 48 48" fill="none">
+            <path d="M24 4 L44 14 L24 24 L4 14 Z" fill="#003B70"/>
+            <path d="M10 18 V30 C10 36 16 40 24 40 C32 40 38 36 38 30 V18" stroke="#003B70" stroke-width="3" fill="none" stroke-linecap="round"/>
+            <circle cx="24" cy="24" r="3.2" fill="#00A8CC"/>
+          </svg>
+        </span>
+        <span class="logo-text">
+          <strong>UNLa</strong>
+          <span>Univ. Nac. de Lanús</span>
+        </span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============ BARRA DE PROGRESO Y ESTADÍSTICAS ============ -->
+  <div class="progress-panel" id="progressPanel">
+    <div class="container">
+      <div class="progress-top-row">
+        <div class="progress-status">
+          <span id="progressLabel">Pregunta 1 de 70</span>
+          <span class="pct" id="progressPct">· 0% completado</span>
+        </div>
+        <div class="stat-chips">
+          <span class="chip correct" id="chipCorrect">✅ Correctas: 0</span>
+          <span class="chip incorrect" id="chipIncorrect">❌ Incorrectas: 0</span>
+          <span class="chip" id="chipAccuracy">🎯 Aciertos: 0%</span>
+          <span class="chip streak" id="chipStreak" style="display:none;">🔥 Racha: 0</span>
+        </div>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+    </div>
+  </div>
+
+  <main class="container">
+
+    <!-- ===================== PANTALLA DE INICIO ===================== -->
+    <section class="screen active" id="screen-start">
+      <div class="hero-card">
+        <span class="hero-kicker">🎓 Práctica de cátedra · UNLa</span>
+        <h2>Poné a prueba lo aprendido sobre<br>Mercantilistas y Fisiócratas</h2>
+        <p class="lead">
+          Un entrenamiento interactivo basado íntegramente en el material de cátedra
+          (Isaac I. Rubin y Guía Práctica) para repasar los conceptos clave de la
+          Historia del Pensamiento Económico antes de tu evaluación.
+        </p>
+
+        <div class="hero-stats">
+          <div class="hero-stat"><strong id="statTotalQuestions">70</strong><span>Preguntas</span></div>
+          <div class="hero-stat"><strong>5</strong><span>Bloques temáticos</span></div>
+          <div class="hero-stat"><strong>~20</strong><span>Minutos</span></div>
+        </div>
+
+        <div class="topics-list">
+          <div class="topic-row"><span class="topic-dot"></span> Paradigmas de la economía y contexto histórico</div>
+          <div class="topic-row"><span class="topic-dot"></span> Mercantilismo primitivo — balanza monetaria</div>
+          <div class="topic-row"><span class="topic-dot"></span> Apogeo del mercantilismo — balanza comercial</div>
+          <div class="topic-row"><span class="topic-dot"></span> Transición teórica: valor y dinero</div>
+          <div class="topic-row"><span class="topic-dot"></span> El paradigma fisiócrata</div>
+        </div>
+
+        <button class="btn btn-primary" id="btnStart">
+          Comenzar entrenamiento
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+    </section>
+
+    <!-- ===================== PANTALLA DE PREGUNTA ===================== -->
+    <section class="screen" id="screen-quiz">
+      <div class="question-card" id="questionCard">
+        <div class="card-meta">
+          <span class="meta-badge" id="partBadge">Parte 1</span>
+          <span class="type-badge" id="typeBadge">Opción múltiple</span>
+        </div>
+        <div class="question-number" id="questionNumber">Pregunta 1</div>
+        <h2 class="question-text" id="questionText">Cargando pregunta…</h2>
+        <div class="multi-hint" id="multiHint" style="display:none;">☑ Esta pregunta tiene más de una respuesta correcta. Seleccioná todas las que correspondan.</div>
+
+        <div class="options" id="optionsList" role="list" aria-live="polite"></div>
+
+        <div class="confirm-row" id="confirmRow" style="display:none;">
+          <button class="btn btn-accent" id="btnConfirmMulti" disabled>Confirmar respuesta</button>
+        </div>
+
+        <div class="feedback-panel" id="feedbackPanel" aria-live="polite">
+          <div class="feedback-title" id="feedbackTitle"></div>
+          <div class="feedback-explanation" id="feedbackExplanation"></div>
+        </div>
+
+        <div class="next-row">
+          <button class="btn btn-primary" id="btnNext" style="display:none;">
+            Siguiente pregunta
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== PANTALLA DE RESULTADOS ===================== -->
+    <section class="screen" id="screen-results">
+      <div class="results-card">
+        <div class="results-medal" id="resultsMedal">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#003B70" stroke-width="1.6"><circle cx="12" cy="9" r="6.5"/><path d="M8.5 14.5L7 22l5-3 5 3-1.5-7.5"/></svg>
+        </div>
+
+        <div class="score-ring-wrap">
+          <svg viewBox="0 0 180 180">
+            <defs>
+              <linearGradient id="ringGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#00A8CC"/>
+                <stop offset="100%" stop-color="#FFC857"/>
+              </linearGradient>
+            </defs>
+            <circle class="score-ring-bg" cx="90" cy="90" r="80"/>
+            <circle class="score-ring-fill" id="scoreRingFill" cx="90" cy="90" r="80"/>
+          </svg>
+          <div class="score-ring-center">
+            <strong id="scorePercent">0%</strong>
+            <span>Aciertos</span>
+          </div>
+        </div>
+
+        <h2 class="results-title" id="resultsTitle">¡Entrenamiento completado!</h2>
+        <p class="results-message" id="resultsMessage">Cargando resultados…</p>
+
+        <div class="results-grid">
+          <div class="results-stat correct"><strong id="finalCorrect">0</strong><span>Correctas</span></div>
+          <div class="results-stat incorrect"><strong id="finalIncorrect">0</strong><span>Incorrectas</span></div>
+          <div class="results-stat streak"><strong id="finalStreak">0</strong><span>Mejor racha</span></div>
+        </div>
+
+        <div class="results-actions">
+          <button class="btn btn-primary" id="btnRestart">Reintentar cuestionario</button>
+          <button class="btn btn-ghost" id="btnToggleReview">Repasar preguntas falladas</button>
+        </div>
+
+        <div class="review-wrap" id="reviewWrap"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <strong>Entrenador Académico UNLa</strong> — Material de práctica generado a partir del cuestionario de cátedra.<br>
+    Historia del Pensamiento Económico · Mercantilistas y Fisiócratas
+  </footer>
+</div>
+
+<!-- Capa de confeti (se puebla dinámicamente por JS) -->
+<div class="confetti-layer" id="confettiLayer" aria-hidden="true"></div>
+
+<script>
+/* =====================================================================
+   ENTRENADOR ACADÉMICO UNLa — LÓGICA DE LA APLICACIÓN
+   Vanilla JS, sin frameworks ni dependencias externas.
+   ===================================================================== */
+(function(){
+  "use strict";
+
+  /* -------------------------------------------------------------
+     1. BASE DE PREGUNTAS
+     Generada automáticamente a partir del archivo de cátedra
+     "70 preguntas sobre mercantilistas y fisiócratas".
+     Cada pregunta: { id, part, type: 'single'|'tf'|'multi', question, options[], explanation }
+     ------------------------------------------------------------- */
+  const QUESTIONS = [{"id": 1, "part": "PARTE 1: CONTEXTO HISTÓRICO Y PARADIGMAS DE LA ECONOMÍA (Preguntas 1 a 15)", "type": "single", "question": "De acuerdo con Karl Polanyi y el Paradigma Sustantivista, ¿cómo se define la economía?", "options": [{"text": "Como la ciencia que estudia la asignación de recursos escasos susceptibles de usos alternativos para satisfacer fines múltiples.", "correct": false}, {"text": "Como un proceso institucionalizado entre el hombre y la naturaleza que permite el abastecimiento regular de medios materiales para satisfacer necesidades.", "correct": true}, {"text": "Como el estudio de las relaciones sociales de producción, distribución e intercambio englobadas en la reproducción social.", "correct": false}, {"text": "Como la lógica formal de toma de decisiones del homo economicus racional e individualista.", "correct": false}], "explanation": "El Paradigma Sustantivista de Polanyi sostiene que la economía es una actividad socialmente institucionalizada de abastecimiento material, donde la escasez no es una premisa definitoria universal."}, {"id": 2, "part": "PARTE 1: CONTEXTO HISTÓRICO Y PARADIGMAS DE LA ECONOMÍA (Preguntas 1 a 15)", "type": "tf", "question": "El Paradigma Neoclásico o Formalista, formulado por Lionel Robbins, parte de la base de que la economía es a-histórica porque asume que los principios de escasez y elección individual operan bajo las mismas leyes en cualquier sociedad.", "options": [{"text": "Verdadero", "correct": true}, {"text": "Falso", "correct": false}], "explanation": "Los formalistas identifican la economía con la forma de mercado y asumen la universalidad y a-historicidad del cálculo instrumental del sujeto económico."}, {"id": 3, "part": "PARTE 1: CONTEXTO HISTÓRICO Y PARADIGMAS DE LA ECONOMÍA (Preguntas 1 a 15)", "type": "multi", "question": "¿Cuáles de las siguientes críticas formula el Paradigma Marxista frente a los enfoques Formalista y Sustantivista? (Selecciona todas las que correspondan)", "options": [{"text": "Critica a los formalistas por su visión etnocéntrica del capitalismo y por reducir la economía a la racionalidad instrumental del individuo.", "correct": true}, {"text": "Critica a los sustantivistas por dar excesiva importancia a la esfera de la distribución, velando el modo de explotación capitalista que se desarrolla en la producción.", "correct": true}, {"text": "Critica a ambos por sostener que el valor de cambio de las mercancías se determina exclusivamente por la naturaleza física del suelo.", "correct": false}, {"text": "Critica a los formalistas por fundamentar su análisis en la reproducción biológica del cuerpo humano.", "correct": false}], "explanation": "El marxismo acusa a los formalistas de etnocentrismo y a los sustantivistas de centrarse demasiado en la distribución, ocultando las relaciones de explotación que ocurren directamente en la esfera productiva."}, {"id": 4, "part": "PARTE 1: CONTEXTO HISTÓRICO Y PARADIGMAS DE LA ECONOMÍA (Preguntas 1 a 15)", "type": "tf", "question": "Durante la Edad Media, la Iglesia Católica consideraba que el comercio profesional realizado con el único objetivo de obtener un beneficio era una actividad moralmente aceptable y necesaria para la prosperidad social.", "options": [{"text": "Verdadero", "correct": false}, {"text": "Falso", "correct": true}], "explanation": "Los pensadores y escolásticos medievales (como Tomás de Aquino) condenaban el comercio por ganancia como \"inmoral\" o \"pecaminoso\" y prohibían estrictamente el cobro de intereses sobre préstamos."}, {"id": 5, "part": "PARTE 1: CONTEXTO HISTÓRICO Y PARADIGMAS DE LA ECONOMÍA (Preguntas 1 a 15)", "type": "single", "question": "¿Qué cambio conceptual caracterizó la transición del pensamiento teocéntrico de la Edad Media hacia el pensamiento de la Edad Moderna en el siglo XVI?", "options": [{"text": "Una mayor sumisión a los dogmas eclesiásticos para asegurar la salvación divina.", "correct": false}, {"text": "La adopción de la economía feudal de consumo autosuficiente basada en el trueque in natura.", "correct": false}, {"text": "El paso a una visión antropocéntrica y racionalista de la Tierra y el ser humano, ejemplificada en la ciencia por Galileo y en la filosofía por Descartes.", "correct": true}, {"text": "La prohibición generalizada de exportar manufacturas nacionales de alto valor agregado.", "correct": false}], "explanation": "El Renacimiento y la revolución científica rompieron con el teocentrismo medieval, ubicando al ser humano en el centro del análisis y promoviendo la investigación basada en la razón y la observación de la naturaleza."}, {"id": 6, "part": "PARTE 1: CONTEXTO HISTÓRICO Y PARADIGMAS DE LA ECONOMÍA (Preguntas 1 a 15)", "type": "tf", "question": "Según el análisis de Rubin, la literatura mercantilista alemana estuvo conformada principalmente por los llamados \"Cameralistas\", cuyos escritos se enfocaban en la gestión financiera y el control administrativo del Estado.", "options": [{"text": "Verdadero", "correct": true}, {"text": "Falso", "correct": false}], "explanation": "Debido al atraso económico de Alemania, el mercantilismo alemán adoptó un carácter burocrático y administrativo (cameralismo) escrito por funcionarios y para funcionarios."}, {"id": 7, "part": "PARTE 1: CONTEXTO HISTÓRICO Y PARADIGMAS DE LA ECONOMÍA (Preguntas 1 a 15)", "type": "single", "question": "¿Cuál era la principal diferencia entre el carácter de la literatura mercantilista en Inglaterra y en Alemania, según la descripción analizada por Rubin?", "options": [{"text": "En Inglaterra la escribían teólogos escolásticos y en Alemania mercaderes de ultramar.", "correct": false}, {"text": "En Inglaterra se basaba en la agricultura de pequeña escala y en Alemania en la metalurgia colonial.", "correct": false}, {"text": "En Inglaterra reflejó el punto de vista del comercio, siendo escrita por mercaderes para mercaderes, mientras que en Alemania fue escrita por funcionarios para funcionarios.", "correct": true}, {"text": "En Inglaterra defendía el monopolio absoluto de la Iglesia sobre el tipo de cambio y en Alemania promovía la usura libre.", "correct": false}], "explanation": "En los países avanzados como Inglaterra, el mercantilismo tuvo un fuerte carácter capitalista y comercial, reflejando directamente los intereses prácticos de la burguesía mercantil."}, {"id": 8, "part": "PARTE 1: CONTEXTO HISTÓRICO Y PARADIGMAS DE LA ECONOMÍA (Preguntas 1 a 15)", "type": "tf", "question": "La economía de la baja Edad Media (siglos XII a XV) se caracterizaba por ser una economía de ciudades o economía regional, donde los intercambios se daban de forma cerrada y autosuficiente dentro de límites geográficos estrechos.", "options": [{"text": "Verdadero", "correct": true}, {"text": "Falso", "correct": false}], "explanation": "Cada ciudad medieval y su distrito agrícola circundante formaban una sola región económica aislada, con escaso comercio de larga distancia (salvo para bienes suntuarios)."}, {"id": 9, "part": "PARTE 1: CONTEXTO HISTÓRICO Y PARADIGMAS DE LA ECONOMÍA (Preguntas 1 a 15)", "type": "single", "question": "¿Qué nombre recibe el sistema de trabajo forzado gratuito que los campesinos medievales debían realizar obligatoriamente en las fincas de los señores feudales?", "options": [{"text": "Laissez-faire.", "correct": false}, {"text": "Barshchina (o corvea).", "correct": true}, {"text": "Tax farming.", "correct": false}, {"text": "Avances primitives.", "correct": false}], "explanation": "La barshchina (en Rusia) o corvée (en Europa occidental) consistía en la prestación obligatoria y gratuita de trabajo agrícola por los siervos en las tierras del noble."}, {"id": 10, "part": "PARTE 1: CONTEXTO HISTÓRICO Y PARADIGMAS DE LA ECONOMÍA (Preguntas 1 a 15)", "type": "tf", "question": "Con el auge del comercio marítimo y la expansión de la economía monetaria a finales de la Edad Media, los señores feudales de los países más avanzados comenzaron a reemplazar las prestaciones feudales in natura por rentas monetarias.", "options": [{"text": "Verdadero", "correct": true}, {"text": "Falso", "correct": false}], "explanation": "El desarrollo de la circulación monetaria y la necesidad de dinero en efectivo de la nobleza impulsaron la monetización de las cargas feudales, transformando a los siervos en arrendatarios libres."}, {"id": 11, "part": "PARTE 1: CONTEXTO HISTÓRICO Y PARADIGMAS DE LA ECONOMÍA (Preguntas 1 a 15)", "type": "single", "question": "¿Qué famoso pensador humanista describió los brutales efectos de los cercamientos de tierras en Inglaterra con la frase: \"Las ovejas devoran a los propios hombres\"?", "options": [{"text": "François Quesnay.", "correct": false}, {"text": "Thomas Mun.", "correct": false}, {"text": "Tomás Moro en su obra Utopía.", "correct": true}, {"text": "William Petty.", "correct": false}], "explanation": "En su obra Utopía, Tomás Moro denunció cómo la expulsión de campesinos para convertir tierras de labranza en campos de pastoreo de ovejas (debido al alto precio de la lana) dejó a miles de personas en la indigencia."}, {"id": 12, "part": "PARTE 1: CONTEXTO HISTÓRICO Y PARADIGMAS DE LA ECONOMÍA (Preguntas 1 a 15)", "type": "tf", "question": "En los gremios artesanales medievales, la competencia entre los maestros estaba completamente permitida y desregulada para que el mercado fijara libremente la calidad y el precio de los bienes.", "options": [{"text": "Verdadero", "correct": false}, {"text": "Falso", "correct": true}], "explanation": "Las estrictas normas de los gremios estaban diseñadas precisamente para suprimir la competencia, limitar el número de ayudantes por taller y fijar precios obligatorios para asegurar la subsistencia decente de los artesanos."}, {"id": 13, "part": "PARTE 1: CONTEXTO HISTÓRICO Y PARADIGMAS DE LA ECONOMÍA (Preguntas 1 a 15)", "type": "single", "question": "¿Qué sector de la producción industrial comenzó a expandirse de forma acelerada en el campo, libre de las estrictas regulaciones gremiales de las ciudades, durante los siglos XVI y XVII?", "options": [{"text": "La minería de plata de Potosí.", "correct": false}, {"text": "La siderurgia pesada estatal.", "correct": false}, {"text": "La industria doméstica rural (cottage industry).", "correct": true}, {"text": "El cultivo intensivo de viñedos y tabaco.", "correct": false}], "explanation": "La industria doméstica o rural (cottage industry) permitió al capital comercial subordinar al productor directo campesino y esquivar las trabas monopolísticas de los gremios urbanos."}, {"id": 14, "part": "PARTE 1: CONTEXTO HISTÓRICO Y PARADIGMAS DE LA ECONOMÍA (Preguntas 1 a 15)", "type": "tf", "question": "La centralización de los Estados modernos y el surgimiento de las monarquías absolutas en el siglo XVI ocurrieron de forma paralela y en estrecha alianza con la fuerza creciente del capital mercantil.", "options": [{"text": "Verdadero", "correct": true}, {"text": "Falso", "correct": false}], "explanation": "La burguesía mercantil necesitaba un Estado centralizado y fuerte para unificar el mercado interno, conquistar colonias y competir exteriormente; a su vez, la Corona necesitaba de la riqueza burguesa para financiar su burocracia y ejércitos."}, {"id": 15, "part": "PARTE 1: CONTEXTO HISTÓRICO Y PARADIGMAS DE LA ECONOMÍA (Preguntas 1 a 15)", "type": "single", "question": "¿Qué práctica fiscal, común de las monarquías absolutas, consistía en conceder de forma privada la recaudación de impuestos a cambio de un precio fijo abonado al Estado?", "options": [{"text": "Laissez-faire.", "correct": false}, {"text": "Tax farming (arrendamiento de impuestos).", "correct": true}, {"text": "Balanza de pagos monetaria.", "correct": false}, {"text": "Avances foncières.", "correct": false}], "explanation": "El tax farming permitía a los reyes obtener liquidez inmediata para el Tesoro real cediendo el derecho de exacción fiscal de una región a financistas o burgueses ricos."}, {"id": 16, "part": "PARTE 2: EL MERCANTILISMO PRIMITIVO (\"BALANZA MONETARIA\") (Preguntas 16 a 25)", "type": "single", "question": "¿Cuál era el objetivo económico primordial del llamado mercantilismo primitivo o \"sistema de la balanza monetaria\"?", "options": [{"text": "Estimular la exportación de maquinaria pesada barata al continente americano.", "correct": false}, {"text": "Devaluar la moneda nacional para favorecer el consumo suntuario de los artesanos.", "correct": false}, {"text": "Retener y acumular metales preciosos dentro de las fronteras nacionales mediante prohibiciones directas y la regulación compulsiva del tipo de cambio.", "correct": true}, {"text": "Cobrar un impuesto único a la renta de los señores terratenientes ociosos.", "correct": false}], "explanation": "El mercantilismo primitivo tenía un enfoque fundamentalmente monetario y fiscal: buscaba incrementar las reservas del Tesoro impidiendo de forma física y legal la salida de oro y plata."}, {"id": 17, "part": "PARTE 2: EL MERCANTILISMO PRIMITIVO (\"BALANZA MONETARIA\") (Preguntas 16 a 25)", "type": "tf", "question": "Bajo el sistema inglés de los \"Estatutos de los Empleados\", los comerciantes extranjeros que vendían sus mercancías en Inglaterra estaban obligados a gastar todo el dinero en efectivo obtenido en la compra de mercancías locales.", "options": [{"text": "Verdadero", "correct": true}, {"text": "Falso", "correct": false}], "explanation": "Esta regulación coercitiva impedía que los comerciantes extranjeros retiraran metales preciosos del país, forzándolos a realizar un intercambio de mercancía por mercancía antes de partir."}, {"id": 18, "part": "PARTE 2: EL MERCANTILISMO PRIMITIVO (\"BALANZA MONETARIA\") (Preguntas 16 a 25)", "type": "single", "question": "¿Cómo controlaba el gobierno de Inglaterra a los comerciantes extranjeros bajo el régimen de los \"Estatutos de los Empleados\" en su fase más temprana?", "options": [{"text": "Obligándolos a registrarse en la Compañía de las Indias Orientales.", "correct": false}, {"text": "Sometiéndolos a la estricta vigilancia de un residente local que actuaba como su \"anfitrión\", registrando todas sus transacciones en un libro.", "correct": true}, {"text": "Prohibiéndoles comercializar cualquier tipo de paño de lana sin acabar.", "correct": false}, {"text": "Imponiéndoles el cobro de la tasa de interés regulada del 33%.", "correct": false}], "explanation": "El sistema de \"anfitriones\" (y posteriormente de inspectores del gobierno) garantizaba que los extranjeros no evadieran la obligación de reinvertir sus ganancias en bienes ingleses en un plazo máximo de ocho meses."}, {"id": 19, "part": "PARTE 2: EL MERCANTILISMO PRIMITIVO (\"BALANZA MONETARIA\") (Preguntas 16 a 25)", "type": "tf", "question": "Las llamadas \"Staples\" (o colonias de contratación) eran puertos o ciudades específicas del continente europeo a las cuales el gobierno inglés obligaba a enviar las exportaciones de lana para poder controlar fiscalmente las transacciones.", "options": [{"text": "Verdadero", "correct": true}, {"text": "Falso", "correct": false}], "explanation": "Al concentrar obligatoriamente el comercio en ciudades como Brujas o Amberes, el Estado inglés aseguraba la recaudación de aranceles y controlaba que una fracción del dinero de las ventas retornara físicamente a Inglaterra."}, {"id": 20, "part": "PARTE 2: EL MERCANTILISMO PRIMITIVO (\"BALANZA MONETARIA\") (Preguntas 16 a 25)", "type": "single", "question": "¿Qué fenómeno monetario, ocurrido en el siglo XVI a causa de la afluencia masiva de oro y plata de América, se caracterizó por un aumento universal y acelerado de los precios en Europa?", "options": [{"text": "La ley de Gresham.", "correct": false}, {"text": "La deflación monetaria de Thomas Mun.", "correct": false}, {"text": "La \"revolución de los precios\".", "correct": true}, {"text": "El orden natural de Quesnay.", "correct": false}], "explanation": "La triplicación de los metales preciosos en circulación disminuyó su valor de cambio intrínseco, lo que generó un incremento de los precios de las mercancías de entre 2 y 3 veces en promedio."}, {"id": 21, "part": "PARTE 2: EL MERCANTILISMO PRIMITIVO (\"BALANZA MONETARIA\") (Preguntas 16 a 25)", "type": "tf", "question": "Durante la revolución de los precios del siglo XVI, los salarios reales de los trabajadores ingleses aumentaron de manera proporcional a la subida de los precios de las provisiones agrícolas.", "options": [{"text": "Verdadero", "correct": false}, {"text": "Falso", "correct": true}], "explanation": "Mientras que las provisiones se encarecieron un 100%, los salarios nominales solo subieron un 30% o 40%, lo que provocó una drástica caída del salario real a la mitad."}, {"id": 22, "part": "PARTE 2: EL MERCANTILISMO PRIMITIVO (\"BALANZA MONETARIA\") (Preguntas 16 a 25)", "type": "single", "question": "¿Qué obra clásica de la literatura mercantilista temprana inglesa fue publicada en 1581 bajo las iniciales \"W. S.\" y originalmente atribuida a William Stafford?", "options": [{"text": "Discourses upon Trade.", "correct": false}, {"text": "England's Treasure by Forraign Trade.", "correct": false}, {"text": "A Compendious or Briefe Examination of Certayne Ordinary Complaints (escrita por John Hales en 1549).", "correct": true}, {"text": "A Treatise of Taxes and Contributions.", "correct": false}], "explanation": "Aunque publicada en 1581 (con Stafford como presunto editor), esta obra fundamental de la primera etapa proteccionista inglesa fue escrita en 1549 por John Hales bajo el título A Discourse of the Common Weal of the Realm of England."}, {"id": 23, "part": "PARTE 2: EL MERCANTILISMO PRIMITIVO (\"BALANZA MONETARIA\") (Preguntas 16 a 25)", "type": "tf", "question": "John Hales (Stafford) defendía un proteccionismo de tipo \"defensivo\" que buscaba restringir la importación de manufacturas caras y procesar la materia prima (lana) dentro de Inglaterra para dar empleo a la población local.", "options": [{"text": "Verdadero", "correct": true}, {"text": "Falso", "correct": false}], "explanation": "Hales sostenía que exportar lana barata e importar paños extranjeros caros succionaba el dinero de Inglaterra, por lo que el Estado debía forzar la industrialización defensiva nacional mediante aranceles aduaneros."}, {"id": 24, "part": "PARTE 2: EL MERCANTILISMO PRIMITIVO (\"BALANZA MONETARIA\") (Preguntas 16 a 25)", "type": "single", "question": "¿A qué causa atribuían principalmente los mercantilistas primitivos como John Hales el deterioro del tipo de cambio inglés y la consiguiente fuga de dinero del país?", "options": [{"text": "A una balanza comercial agraria deficitaria.", "correct": false}, {"text": "Al envilecimiento de la moneda por parte de la propia Corona, que emitía monedas con menor contenido metálico.", "correct": true}, {"text": "A la excesiva acumulación de metales preciosos en cofres ociosos.", "correct": false}, {"text": "A las trabas eclesiásticas al cobro de la renta del suelo.", "correct": false}], "explanation": "Al no comprender la correlación entre el tipo de cambio y la balanza comercial, veían en el deterioro del chelín una consecuencia directa de la emisión de monedas ligeras."}, {"id": 25, "part": "PARTE 2: EL MERCANTILISMO PRIMITIVO (\"BALANZA MONETARIA\") (Preguntas 16 a 25)", "type": "tf", "question": "Los mercantilistas primitivos del siglo XVI eran plenamente conscientes de que las fluctuaciones del tipo de cambio de la moneda dependían de forma regular y de acuerdo con leyes económicas del saldo positivo o negativo de la balanza comercial.", "options": [{"text": "Verdadero", "correct": false}, {"text": "Falso", "correct": true}], "explanation": "El funcionamiento de la balanza comercial como causa determinante del tipo de cambio les era desconocido; por ello intentaban retener el dinero mediante la intervención directa y compulsiva en la circulación monetaria."}, {"id": 26, "part": "PARTE 3: EL APOGEO DEL MERCANTILISMO (\"BALANZA COMERCIAL\") (Preguntas 26 a 40)", "type": "single", "question": "¿Cuál es la obra cumbre del mercantilismo en su apogeo, escrita en 1630 por Thomas Mun y considerada por Marx y Engels como \"el evangelio mercantilista\"?", "options": [{"text": "Discourses upon Trade.", "correct": false}, {"text": "Aritmética Política.", "correct": false}, {"text": "England's Treasure by Forraign Trade (La riqueza de Inglaterra por el comercio exterior).", "correct": true}, {"text": "Le Commerce et le gouvernement.", "correct": false}], "explanation": "Escrita en 1630 y publicada en 1664, la obra de Thomas Mun representa el punto de maduración analítica de la teoría de la balanza comercial."}, {"id": 27, "part": "PARTE 3: EL APOGEO DEL MERCANTILISMO (\"BALANZA COMERCIAL\") (Preguntas 26 a 40)", "type": "tf", "question": "Thomas Mun, como director de la Compañía de las Indias Orientales, defendió activamente la exportación de metales preciosos argumentando que dicho flujo de dinero era indispensable para financiar el lucrativo comercio de transporte.", "options": [{"text": "Verdadero", "correct": true}, {"text": "Falso", "correct": false}], "explanation": "Mun demostró que prohibir la salida de dinero arruinaría las transacciones comerciales con la India. Sostuvo que el capital monetario exportado retornaría al país multiplicado por la reventa de bienes coloniales en Europa."}, {"id": 28, "part": "PARTE 3: EL APOGEO DEL MERCANTILISMO (\"BALANZA COMERCIAL\") (Preguntas 26 a 40)", "type": "single", "question": "¿Qué célebre metáfora utilizó Thomas Mun para ilustrar que la exportación transitoria de dinero en el comercio exterior era beneficiosa a largo plazo para la nación?", "options": [{"text": "La analogía médica de la circulación de la sangre en el cuerpo humano.", "correct": false}, {"text": "La acción del agricultor que en el momento de la siembra arroja el grano a la tierra para recoger una cosecha abundante posteriormente.", "correct": true}, {"text": "La comparación de la industria urbana con un zapatero estéril.", "correct": false}, {"text": "El cálculo de mortalidad de las tres generaciones de una familia.", "correct": false}], "explanation": "Mun argumentó que \"arrojar\" el dinero al circuito comercial exterior es la siembra necesaria para \"cosechar\" una masa de riqueza monetaria mucho mayor al concretar las ventas."}, {"id": 29, "part": "PARTE 3: EL APOGEO DEL MERCANTILISMO (\"BALANZA COMERCIAL\") (Preguntas 26 a 40)", "type": "tf", "question": "De acuerdo con la regla matemática de Thomas Mun, el saldo positivo de la balanza comercial es el único medio por el cual un país que no posee minas propias puede atraer y multiplicar sus tesoros metálicos.", "options": [{"text": "Verdadero", "correct": true}, {"text": "Falso", "correct": false}], "explanation": "La diferencia entre el valor de lo que se exporta y lo que se importa debe ser obligatoriamente cancelada por las otras naciones mediante el envío de dinero en efectivo."}, {"id": 30, "part": "PARTE 3: EL APOGEO DEL MERCANTILISMO (\"BALANZA COMERCIAL\") (Preguntas 26 a 40)", "type": "single", "question": "¿Qué recomendación de política comercial formuló Thomas Mun con respecto al precio de venta de las manufacturas nacionales de exportación?", "options": [{"text": "Mantener precios de exportación siempre altos para maximizar la entrada de metales.", "correct": false}, {"text": "Prohibir la importación de cualquier tipo de materia prima extranjera.", "correct": false}, {"text": "Vender lo más barato posible en los mercados donde exista competencia para desplazar a los rivales comerciales, como ocurrió con los venecianos en Turquía.", "correct": true}, {"text": "Dejar que el libre juego de la oferta y la demanda agrícola fije los precios.", "correct": false}], "explanation": "Mun comprendió que en un mercado competitivo la reducción de precios incrementaba exponencialmente las ventas físicas, beneficiando a la nación en su conjunto a pesar de la aparente pérdida del comerciante individual."}, {"id": 31, "part": "PARTE 3: EL APOGEO DEL MERCANTILISMO (\"BALANZA COMERCIAL\") (Preguntas 26 a 40)", "type": "tf", "question": "Para los mercantilistas tardíos, la ganancia comercial tiene su origen en la producción material y en el valor agregado por la naturaleza del suelo.", "options": [{"text": "Verdadero", "correct": false}, {"text": "Falso", "correct": true}], "explanation": "Para el mercantilismo, la ganancia surge del \"intercambio de no equivalentes\" en la circulación (el beneficio por la venta), al comprar por debajo del valor y vender por encima de este."}, {"id": 32, "part": "PARTE 3: EL APOGEO DEL MERCANTILISMO (\"BALANZA COMERCIAL\") (Preguntas 26 a 40)", "type": "multi", "question": "¿Cuáles de las siguientes características definen el \"sistema de la balanza comercial\" del mercantilismo desarrollado en comparación con el mercantilismo primitivo? (Selecciona todas las que correspondan)", "options": [{"text": "Es expansionista y agresivo, apuntando a la conquista de mercados mundiales y la supremacía colonial.", "correct": true}, {"text": "Sustituye el control minucioso de cada transacción individual por una regulación de alcance nacional más amplio.", "correct": true}, {"text": "Proclama la abolición absoluta de todos los aranceles de importación manufacturada.", "correct": false}, {"text": "Defiende que el dinero es un simple instrumento de cuenta sin ningún valor real o ficticio.", "correct": false}], "explanation": "El mercantilismo maduro operaba a escala macroeconómica protegiendo la industria de exportación nacional para forzar un balance de pagos positivo."}, {"id": 33, "part": "PARTE 3: EL APOGEO DEL MERCANTILISMO (\"BALANZA COMERCIAL\") (Preguntas 26 a 40)", "type": "tf", "question": "D'Avenant resumió la postura mercantilista al afirmar que el comercio interno solo redistribuye la riqueza entre los habitantes, mientras que el comercio de exportación es el único que enriquece al país en su conjunto.", "options": [{"text": "Verdadero", "correct": true}, {"text": "Falso", "correct": false}], "explanation": "Dado que la ganancia comercial surgía del intercambio no equivalente, la ganancia interna de uno era la pérdida de otro ciudadano. El enriquecimiento nacional neto solo ocurría cuando el excedente se extraía del consumo extranjero."}, {"id": 34, "part": "PARTE 3: EL APOGEO DEL MERCANTILISMO (\"BALANZA COMERCIAL\") (Preguntas 26 a 40)", "type": "single", "question": "¿Qué ley, aprobada por Oliver Cromwell en 1651, asestó un golpe letal al transporte marítimo de Holanda al monopolizar el comercio colonial británico para los barcos ingleses?", "options": [{"text": "El Estatuto de los Empleados.", "correct": false}, {"text": "La Ley de Gresham.", "correct": false}, {"text": "La Ley de Navegación (Navigation Act).", "correct": true}, {"text": "El Impuesto Único sobre la renta.", "correct": false}], "explanation": "La Ley de Navegación prohibía que barcos de terceras naciones (como los holandeses, \"transportistas de Europa\") intermediaran en el tráfico comercial de las colonias inglesas."}, {"id": 35, "part": "PARTE 3: EL APOGEO DEL MERCANTILISMO (\"BALANZA COMERCIAL\") (Preguntas 26 a 40)", "type": "tf", "question": "Según el análisis de Rubin, los mercantilistas confundieron ingenuamente el \"valor de cambio\" con el dinero físico (oro y plata) debido a las condiciones de transición de una economía natural a una monetaria.", "options": [{"text": "Verdadero", "correct": true}, {"text": "Falso", "correct": false}], "explanation": "En una economía donde la mayoría de los bienes aún no eran mercancías para el mercado, el dinero en efectivo era visto como el depositario exclusivo del valor de cambio realizable."}, {"id": 36, "part": "PARTE 3: EL APOGEO DEL MERCANTILISMO (\"BALANZA COMERCIAL\") (Preguntas 26 a 40)", "type": "single", "question": "De acuerdo con la visión unánime de los mercantilistas (como William Petty), ¿cómo debían regularse los salarios de la clase trabajadora?", "options": [{"text": "Debían aumentarse mediante paritarias libres para reactivar el mercado de consumo doméstico.", "correct": false}, {"text": "Debían fijarse en proporción exacta al Producto Neto generado por la naturaleza agrícola.", "correct": false}, {"text": "Debían limitarse estrictamente por ley al mínimo necesario para la subsistencia física.", "correct": true}, {"text": "Debían cancelarse mediante el reparto directo de acciones de la Compañía de las Indias Orientales.", "correct": false}], "explanation": "Sostenían una versión pragmática de la \"ley de hierro de los salarios\" basada en la coerción, argumentando que la abundancia fomentaba la indisciplina y la holgazanería."}, {"id": 37, "part": "PARTE 3: EL APOGEO DEL MERCANTILISMO (\"BALANZA COMERCIAL\") (Preguntas 26 a 40)", "type": "tf", "question": "William Petty consideraba que limitar los salarios de los pobres y prohibirles ahorrar para tiempos de inactividad era una medida de estricta justicia y utilidad pública para obligarlos a trabajar de forma constante.", "options": [{"text": "Verdadero", "correct": true}, {"text": "Falso", "correct": false}], "explanation": "Petty argumentaba que el exceso de ingresos hacía \"licenciosos\" a los obreros y que el Estado debía mantenerlos bajo la disciplina del trabajo continuo."}, {"id": 38, "part": "PARTE 3: EL APOGEO DEL MERCANTILISMO (\"BALANZA COMERCIAL\") (Preguntas 26 a 40)", "type": "single", "question": "¿Qué papel asignaba la política económica mercantilista de Inglaterra a la importación de materias primas extranjeras?", "options": [{"text": "Debían ser fuertemente gravadas con aranceles aduaneros para proteger la minería local.", "correct": false}, {"text": "Debían estar exentas de impuestos e incluso ser subsidiadas para abaratar los costos de la industria nacional.", "correct": true}, {"text": "Debían ser prohibidas por completo en favor del Producto Neto de los terratenientes ingleses.", "correct": false}, {"text": "Debían ser compradas únicamente mediante oro devaluado de Holanda.", "correct": false}], "explanation": "El proteccionismo mercantilista favorecía de forma unilateral a la manufactura local de exportación, abaratando la entrada de insumos básicos."}, {"id": 39, "part": "PARTE 3: EL APOGEO DEL MERCANTILISMO (\"BALANZA COMERCIAL\") (Preguntas 26 a 40)", "type": "tf", "question": "A diferencia de lo que ocurrió en Francia, donde la agricultura permaneció bajo un régimen feudal asfixiado por el mercantilismo, en Inglaterra la penetración temprana del capitalismo en el campo propició una alianza política entre terratenientes y burguesía comercial.", "options": [{"text": "Verdadero", "correct": true}, {"text": "Falso", "correct": false}], "explanation": "En Inglaterra, los terratenientes capitalistas se beneficiaban del dinamismo del comercio de exportación de lanas, lo que atenuó el conflicto entre el campo y la ciudad que más tarde asfixiaría a Francia."}, {"id": 40, "part": "PARTE 3: EL APOGEO DEL MERCANTILISMO (\"BALANZA COMERCIAL\") (Preguntas 26 a 40)", "type": "single", "question": "Para los mercantilistas tardíos de finales del siglo XVII, como Child y D'Avenant, ¿cuál era la condición indispensable para sostener la competitividad exportadora de Inglaterra en el mercado mundial?", "options": [{"text": "Elevar la tasa de interés regulada de los préstamos al 33%.", "correct": false}, {"text": "Garantizar precios bajos del trabajo y de las mercancías manufacturadas.", "correct": true}, {"text": "Entregar la renta de la tierra a los labriegos capitalistas directos.", "correct": false}, {"text": "Prohibir la exportación de paños de lana acabados.", "correct": false}], "explanation": "Al consolidarse la competencia internacional (especialmente con Francia y Holanda), la burguesía exportadora comprendió que la única defensa contra los rivales era la reducción sistemática de costos y precios de venta."}, {"id": 41, "part": "PARTE 4: LA TRANSICIÓN TEÓRICA Y EVOLUCIÓN DEL VALOR Y DINERO (Preguntas 41 a 55)", "type": "single", "question": "¿Qué destacado comerciante y Comisionado de Aduanas inglés publicó en 1691 sus \"Discursos sobre el Comercio\" como la primera reacción científica sistemática a favor del libre comercio?", "options": [{"text": "William Petty.", "correct": false}, {"text": "Dudley North.", "correct": true}, {"text": "David Hume.", "correct": false}, {"text": "James Steuart.", "correct": false}], "explanation": "Dudley North fue el primer profeta del librecambismo, argumentando contra el proteccionismo de la balanza comercial y exigiendo la no intervención estatal."}, {"id": 42, "part": "PARTE 4: LA TRANSICIÓN TEÓRICA Y EVOLUCIÓN DEL VALOR Y DINERO (Preguntas 41 a 55)", "type": "tf", "question": "Dudley North superó el error mercantilista al definir al dinero meramente como \"pesos y medidas\" que facilitan el tráfico comercial, negando que la escasez de dinero fuera la causa real del estancamiento de los negocios.", "options": [{"text": "Verdadero", "correct": true}, {"text": "Falso", "correct": false}], "explanation": "North demostró que cuando un comerciante se queja de \"falta de dinero\", en realidad lo que le falta es demanda o un comprador para su producción excedente."}, {"id": 43, "part": "PARTE 4: LA TRANSICIÓN TEÓRICA Y EVOLUCIÓN DEL VALOR Y DINERO (Preguntas 41 a 55)", "type": "single", "question": "¿Qué principio de autorregulación de la circulación monetaria formuló Dudley North para combatir el miedo mercantilista a la fuga de metales?", "options": [{"text": "Que el Estado debe fijar por tratado el valor de cambio del chelín.", "correct": false}, {"text": "Que el dinero sobrante para las necesidades del comercio sale espontáneamente de la circulación para ser fundido como plata, regulándose solo.", "correct": true}, {"text": "Que el Producto Neto de la naturaleza agrícola multiplica automáticamente las monedas.", "correct": false}, {"text": "Que el dinero devaluado expulsa inexorablemente al dinero de peso estándar.", "correct": false}], "explanation": "North comprendió que la masa de dinero se adapta espontáneamente a las necesidades de la circulación de mercancías; por ende, las leyes que prohíben la exportación de metales son inútiles y dañinas."}, {"id": 44, "part": "PARTE 4: LA TRANSICIÓN TEÓRICA Y EVOLUCIÓN DEL VALOR Y DINERO (Preguntas 41 a 55)", "type": "tf", "question": "Dudley North, al igual que Petty y Locke, se opuso a los límites legales de las tasas de interés argumentando que el interés es \"renta por las reservas\" y debe fijarse de forma libre por la oferta y la demanda de capitales.", "options": [{"text": "Verdadero", "correct": true}, {"text": "Falso", "correct": false}], "explanation": "North defendió al capital financiero equiparando el alquiler de dinero (interés) con el alquiler de la tierra (renta), áreas donde el Estado no tiene potestad natural de control."}, {"id": 45, "part": "PARTE 4: LA TRANSICIÓN TEÓRICA Y EVOLUCIÓN DEL VALOR Y DINERO (Preguntas 41 a 55)", "type": "single", "question": "¿A qué economista atribuye Rubin los primeros pasos científicos hacia la formulación de la teoría del valor-trabajo al equiparar analíticamente el valor de un bushel de grano con el de una onza de plata de Perú?", "options": [{"text": "Dudley North.", "correct": false}, {"text": "David Hume.", "correct": false}, {"text": "William Petty.", "correct": true}, {"text": "James Steuart.", "correct": false}], "explanation": "Petty formuló la idea de que dos mercancías tienen el mismo valor de cambio si su producción ha demandado el mismo tiempo de trabajo promedio."}, {"id": 46, "part": "PARTE 4: LA TRANSICIÓN TEÓRICA Y EVOLUCIÓN DEL VALOR Y DINERO (Preguntas 41 a 55)", "type": "tf", "question": "En su análisis teórico, William Petty disolvió la categoría de la ganancia capitalista dentro de la renta de la tierra, considerando a esta última como el plusvalor absoluto total del cual se deducen los salarios.", "options": [{"text": "Verdadero", "correct": true}, {"text": "Falso", "correct": false}], "explanation": "En el siglo XVII, la agricultura aún era el sector abrumadoramente dominante y la ganancia industrial no se había autonomizado formalmente de la renta del suelo en la teoría."}, {"id": 47, "part": "PARTE 4: LA TRANSICIÓN TEÓRICA Y EVOLUCIÓN DEL VALOR Y DINERO (Preguntas 41 a 55)", "type": "single", "question": "¿Qué unidad de medida común de valor propuso William Petty en su búsqueda de una \"paridad natural\" que permitiera equiparar las fuerzas del trabajo humano y la fertilidad de la tierra?", "options": [{"text": "La onza de plata de Perú.", "correct": false}, {"text": "Los \"días de alimento\" de un hombre adulto mediano.", "correct": true}, {"text": "El arancel de aduana de la lana.", "correct": false}, {"text": "La tasa de interés agraria del 5%.", "correct": false}], "explanation": "Petty intentó resolver la paridad tierra-trabajo expresando ambas fuerzas físicas bajo el concepto alimentario de subsistencia biológica diaria."}, {"id": 48, "part": "PARTE 4: LA TRANSICIÓN TEÓRICA Y EVOLUCIÓN DEL VALOR Y DINERO (Preguntas 41 a 55)", "type": "tf", "question": "De acuerdo con la crítica de Rubin, William Petty cayó en una aguda contradicción al confundir la cantidad de trabajo necesario para la producción con el \"valor del trabajo\" (es decir, el costo de los salarios).", "options": [{"text": "Verdadero", "correct": true}, {"text": "Falso", "correct": false}], "explanation": "Petty inicialmente definió el valor por el tiempo de trabajo empleado, pero luego pasó a determinarlo por los \"días de alimento\" (salarios) que costaba el trabajador, un error recurrente en la economía clásica."}, {"id": 49, "part": "PARTE 4: LA TRANSICIÓN TEÓRICA Y EVOLUCIÓN DEL VALOR Y DINERO (Preguntas 41 a 55)", "type": "single", "question": "¿Qué filósofo y economista del siglo XVII sostuvo que el trabajo es el origen del 90% del valor de uso de las cosas, pero relegó la fijación de su valor de cambio exclusivamente a la ley de la oferta y la demanda?", "options": [{"text": "Nicholas Barbon.", "correct": false}, {"text": "Richard Cantillon.", "correct": false}, {"text": "John Locke.", "correct": true}, {"text": "David Ricardo.", "correct": false}], "explanation": "Para Locke, el trabajo genera la utilidad y riqueza material de los objetos, pero el precio en el mercado depende puramente de la proporción accidental entre compradores y vendedores."}, {"id": 50, "part": "PARTE 4: LA TRANSICIÓN TEÓRICA Y EVOLUCIÓN DEL VALOR Y DINERO (Preguntas 41 a 55)", "type": "tf", "question": "Richard Cantillon, influenciado por Petty, le otorgó la superioridad analítica a la tierra e intentó reducir el valor del trabajo del obrero a la superficie de suelo necesaria para alimentarlo a él y a su familia.", "options": [{"text": "Verdadero", "correct": true}, {"text": "Falso", "correct": false}], "explanation": "Cantillon, como predecesor de la fisiocracia, intentó medir el \"valor intrínseco\" de las cosas reduciendo todo el trabajo a la cantidad de Producto de la tierra adjudicado al operario."}, {"id": 51, "part": "PARTE 4: LA TRANSICIÓN TEÓRICA Y EVOLUCIÓN DEL VALOR Y DINERO (Preguntas 41 a 55)", "type": "single", "question": "¿Qué distinción conceptual del valor planteó James Steuart en su obra de 1767 al analizar la producción manufacturera?", "options": [{"text": "Diferenció entre valor de uso y Producto Neto.", "correct": false}, {"text": "Dividió el precio de una mercancía en su \"valor real\" (costos de producción de insumos y salarios) y la \"ganancia al vender\" en el mercado.", "correct": true}, {"text": "Separó el capital circulante en avances primitives y avances annuelles.", "correct": false}, {"text": "Distinguió el valor del oro del valor del trigo por la Ley de Gresham.", "correct": false}], "explanation": "Steuart definió el \"valor real\" por los costos físicos fijos e incluyó la plusvalía únicamente como un recargo mercantil fluctuante de la demanda."}, {"id": 52, "part": "PARTE 4: LA TRANSICIÓN TEÓRICA Y EVOLUCIÓN DEL VALOR Y DINERO (Preguntas 41 a 55)", "type": "tf", "question": "David Hume, en sus \"Ensayos\" de 1753, formuló una teoría cuantitativa del dinero de carácter nominalista, afirmando que el dinero carece de valor intrínseco y es un simple signo de cuenta para facilitar el intercambio.", "options": [{"text": "Verdadero", "correct": true}, {"text": "Falso", "correct": false}], "explanation": "Hume consideraba que el oro y la plata solo tienen un \"valor ficticio\" de convención social, operando como representación condicional del trabajo y las mercancías."}, {"id": 53, "part": "PARTE 4: LA TRANSICIÓN TEÓRICA Y EVOLUCIÓN DEL VALOR Y DINERO (Preguntas 41 a 55)", "type": "single", "question": "De acuerdo con el mecanismo de autorregulación del dinero metálico descrito por David Hume, ¿qué ocurre si la masa monetaria de un país supera su nivel normal en proporción a su industria?", "options": [{"text": "Los precios de las manufacturas locales caen de forma permanente.", "correct": false}, {"text": "Se establece un impuesto único a la renta del suelo.", "correct": false}, {"text": "Los precios locales suben, haciendo que el país sea menos competitivo externamente, lo que provoca la fuga natural del exceso de metal precioso.", "correct": true}, {"text": "Los capitalistas agrarios multiplican automáticamente la barshchina.", "correct": false}], "explanation": "Hume argumentaba que los flujos de metales preciosos se distribuyen solos internacionalmente, haciendo imposible y nociva la acumulación mercantil de tesoros muertos."}, {"id": 54, "part": "PARTE 4: LA TRANSICIÓN TEÓRICA Y EVOLUCIÓN DEL VALOR Y DINERO (Preguntas 41 a 55)", "type": "tf", "question": "James Steuart refutó de forma exitosa la teoría cuantitativa de David Hume al demostrar que es la circulación mercantil de mercancías (incluyendo el nivel de sus precios) la que determina la cantidad de dinero que efectivamente circula, acumulándose el excedente como tesoro ocioso.", "options": [{"text": "Verdadero", "correct": true}, {"text": "Falso", "correct": false}], "explanation": "Steuart demostró que el dinero inactivo en cofres no afecta los precios. El volumen de transacciones y los precios (basados en valores de cambio intrínsecos) son los que demandan o repelen la masa monetaria necesaria en el mercado."}, {"id": 55, "part": "PARTE 4: LA TRANSICIÓN TEÓRICA Y EVOLUCIÓN DEL VALOR Y DINERO (Preguntas 41 a 55)", "type": "single", "question": "¿Cómo explicó David Hume el nivel absoluto de la tasa de interés en sus ensayos económicos?", "options": [{"text": "Sostuvo que depende de la cantidad absoluta de oro y plata que ingresa de América.", "correct": false}, {"text": "Sostuvo que depende de la demanda de crédito, del volumen de capitales acumulados y del tamaño de los beneficios comerciales, no de la cantidad de dinero.", "correct": true}, {"text": "Afirmó que la determina por decreto el Rey mediante los cambistas reales.", "correct": false}, {"text": "Explicó que equivale exactamente al 10% del capital fijo de la clase estéril.", "correct": false}], "explanation": "Hume independizó la tasa de interés del dinero metálico, demostrando que el interés es el alquiler del capital real (trabajo y mercancías acumuladas) y baja cuando se dinamiza el comercio industrial."}, {"id": 56, "part": "PARTE 5: EL PARADIGMA FISIÓCRATA (Preguntas 56 a 70)", "type": "single", "question": "¿Qué significa etimológicamente el término \"Fisiocracia\", escuela de pensamiento económico surgida en la Francia del siglo XVIII?", "options": [{"text": "Gobierno de los mercaderes y del Rey.", "correct": false}, {"text": "Gobierno de la naturaleza.", "correct": true}, {"text": "Ciencia de la administración fiscal.", "correct": false}, {"text": "Reproducción de la clase estéril.", "correct": false}], "explanation": "Proviene del griego, postulando la existencia de un \"orden natural\" eterno e inmutable regido por las leyes de la naturaleza física."}, {"id": 57, "part": "PARTE 5: EL PARADIGMA FISIÓCRATA (Preguntas 56 a 70)", "type": "tf", "question": "François Quesnay, el cirujano real de Luis XV, pensaba la circulación de la riqueza nacional de forma biológica, comparando el flujo libre del Producto Neto con la circulación de la sangre en el cuerpo humano.", "options": [{"text": "Verdadero", "correct": true}, {"text": "Falso", "correct": false}], "explanation": "Su formación médica condicionó su visión fisiológica de la economía, advirtiendo que los bloqueos arancelarios o impositivos enfermaban al cuerpo social del Estado."}, {"id": 58, "part": "PARTE 5: EL PARADIGMA FISIÓCRATA (Preguntas 56 a 70)", "type": "single", "question": "¿Cómo dividió François Quesnay a las clases sociales de Francia en su famoso esquema del Tableau Économique?", "options": [{"text": "En Clero, Nobleza y Tercer Estado.", "correct": false}, {"text": "En Capitalistas agrarios, Obreros agrícolas y Artesanos.", "correct": false}, {"text": "En Clase Propietaria (terratenientes), Clase Productiva (labradores) y Clase Estéril (artesanos y comerciantes).", "correct": true}, {"text": "En Productores de oro, Cambistas y Obreros del paño.", "correct": false}], "explanation": "Quesnay clasificó a la sociedad en función de su papel respecto a la generación y apropiación del excedente agrícola."}, {"id": 59, "part": "PARTE 5: EL PARADIGMA FISIÓCRATA (Preguntas 56 a 70)", "type": "tf", "question": "La Clase Estéril del Tableau Économique de Quesnay era considerada inútil o vaga para la sociedad francesa prerrevolucionaria.", "options": [{"text": "Verdadero", "correct": false}, {"text": "Falso", "correct": true}], "explanation": "Aunque indispensable, Quesnay la consideraba \"estéril\" únicamente porque su trabajo no multiplicaba físicamente la materia, limitándose a cambiar de forma los insumos agrícolas preexistentes."}, {"id": 60, "part": "PARTE 5: EL PARADIGMA FISIÓCRATA (Preguntas 56 a 70)", "type": "single", "question": "¿Qué escuela de pensamiento económico fue la primera en trasladar el origen del plusvalor (excedente) desde la esfera de la circulación comercial hacia la esfera de la producción material?", "options": [{"text": "Los mercantilistas ingleses tardíos.", "correct": false}, {"text": "Los fisiócratas franceses.", "correct": true}, {"text": "La escuela neoclásica formalista.", "correct": false}, {"text": "Los cameralistas alemanes.", "correct": false}], "explanation": "Los fisiócratas asestaron un golpe letal al mercantilismo al demostrar que el excedente (Producto Neto) se crea en la producción y no en el mero cambio de equivalentes comerciales."}, {"id": 61, "part": "PARTE 5: EL PARADIGMA FISIÓCRATA (Preguntas 56 a 70)", "type": "tf", "question": "De acuerdo con la teoría fisiócrata, el Producto Neto consiste en el excedente físico material cosechado que queda libre tras restar las semillas y los medios de subsistencia del labrador.", "options": [{"text": "Verdadero", "correct": true}, {"text": "Falso", "correct": false}], "explanation": "Los fisiócratas asimilaron el excedente de valor de cambio con la multiplicación material física del suelo producida por obra de la vegetación natural."}, {"id": 62, "part": "PARTE 5: EL PARADIGMA FISIÓCRATA (Preguntas 56 a 70)", "type": "single", "question": "¿Qué analogía de las arvejas planteaba el fisiócrata italiano Ferdinando Paoletti para demostrar la productividad exclusiva de la agricultura?", "options": [{"text": "Que un campesino gasta la misma cantidad de arvejas que consume un artesano.", "correct": false}, {"text": "Que si le damos arvejas a un cocinero las servirá igual, pero si las damos a un jardinero la naturaleza las sembrará y multiplicará de forma cuadruplicada.", "correct": true}, {"text": "Que las arvejas son valores de cambio ficticios similares al dinero.", "correct": false}, {"text": "Que el impuesto único se cobra sobre el excedente de la cosecha de arvejas.", "correct": false}], "explanation": "Paoletti ilustró la teoría fisiocrática demostrando que solo el suelo multiplica la sustancia física, mientras la industria urbana es de mera recomposición formal."}, {"id": 63, "part": "PARTE 5: EL PARADIGMA FISIÓCRATA (Preguntas 56 a 70)", "type": "tf", "question": "Para los fisiócratas, el dinero no constituye verdadera riqueza, sino un simple \"signo intermediario\" que facilita el tráfico y la circulación de los valores de uso reales (pan, carne, telas).", "options": [{"text": "Verdadero", "correct": true}, {"text": "Falso", "correct": false}], "explanation": "Sostuvieron que \"el dinero no cría dinero\". La prosperidad nacional radicaba en la reproducción abundante de la riqueza física que renace anualmente del suelo, y no en el acervo metálico acumulado."}, {"id": 64, "part": "PARTE 5: EL PARADIGMA FISIÓCRATA (Preguntas 56 a 70)", "type": "single", "question": "¿Cómo dividió Anne Robert Jacques Turgot (discípulo de Quesnay y Ministro de Finanzas) a las clases sociales, refinando el esquema tripartito original de la fisiocracia?", "options": [{"text": "En siervos, nobles y monarquía absoluta.", "correct": false}, {"text": "En cinco órdenes: propietarios, capitalistas agrarios, obreros agrícolas, capitalistas industriales y obreros industriales.", "correct": true}, {"text": "En formalistas, sustantivistas, mercantilistas, clásicos y marxistas.", "correct": false}, {"text": "En directores de la Compañía de Indias y mendigos urbanos.", "correct": false}], "explanation": "Turgot aisló con precisión científica al capitalista del obrero asalariado desposeído tanto en el campo como en la ciudad, sentando bases más nítidas para la teoría clásica."}, {"id": 65, "part": "PARTE 5: EL PARADIGMA FISIÓCRATA (Preguntas 56 a 70)", "type": "tf", "question": "Según la propuesta impositiva de los fisiócratas, el Estado debía anular todos los gravámenes indirectos al comercio y cobrar un Impuesto Único sobre la renta de la tierra percibida por los terratenientes nobles.", "options": [{"text": "Verdadero", "correct": true}, {"text": "Falso", "correct": false}], "explanation": "Dado que el excedente (Producto Neto) terminaba en manos de los propietarios de tierras, cobrar impuestos sobre el capital agrario o el salario obrero detendría el flujo circular de reproducción. El impuesto debía gravar directamente al excedente disponible."}, {"id": 66, "part": "PARTE 5: EL PARADIGMA FISIÓCRATA (Preguntas 56 a 70)", "type": "single", "question": "¿Qué lema o consigna librecambista internacional popularizaron los fisiócratas para exigir la eliminación de trabas, aranceles internos y privilegios mercantilistas?", "options": [{"text": "\"El grano caro hace al trabajo barato\".", "correct": false}, {"text": "\"El trabajo es el padre y la tierra es la madre\".", "correct": false}, {"text": "\"Laissez-faire, Laissez-passer\" (Dejar hacer, dejar pasar).", "correct": true}, {"text": "\"Un marinero es en efecto tres agricultores\".", "correct": false}], "explanation": "Los fisiócratas abogaban por la libertad de mercado absoluta, permitiendo que las fuerzas productivas e industriales operaran bajo el \"orden natural\" sin regulaciones burocráticas."}, {"id": 67, "part": "PARTE 5: EL PARADIGMA FISIÓCRATA (Preguntas 56 a 70)", "type": "tf", "question": "El concepto de \"Bon Prix\" (buen precio) de Quesnay consistía en fijar precios de trigo artificialmente bajos para subsidiar de forma barata el consumo de los obreros de la clase estéril.", "options": [{"text": "Verdadero", "correct": false}, {"text": "Falso", "correct": true}], "explanation": "El Bon Prix implicaba liberar la exportación de granos para que el precio francés del trigo se elevara y estabilizara al nivel rentable del mercado mundial, estimulando la inversión capitalista en la agricultura."}, {"id": 68, "part": "PARTE 5: EL PARADIGMA FISIÓCRATA (Preguntas 56 a 70)", "type": "single", "question": "¿Cuál es el principal servicio teórico del Tableau Économique de François Quesnay (1758) a la ciencia económica moderna?", "options": [{"text": "Ser el primer modelo de aranceles de aduana proteccionistas.", "correct": false}, {"text": "Constituir el primer modelo macroeconómico de reproducción social unificada, mostrando el flujo circular e interdependiente de ingresos y mercancías entre las clases.", "correct": true}, {"text": "Determinar matemáticamente la paridad entre las onzas de plata y el trigo.", "correct": false}, {"text": "Registrar estadísticamente las curvas de mortalidad de Graunt.", "correct": false}], "explanation": "Quesnay representó de forma genial el proceso de reproducción capitalista periódico global como un sistema integrado, un legado analítico rescatado por Marx para sus esquemas en El Capital."}, {"id": 69, "part": "PARTE 5: EL PARADIGMA FISIÓCRATA (Preguntas 56 a 70)", "type": "tf", "question": "A diferencia de los economistas clásicos ingleses que buscaban trigo barato para favorecer el avance industrial urbano, el librecambismo de los fisiócratas estaba orientado a defender los intereses agrarios de la burguesía rural francesa.", "options": [{"text": "Verdadero", "correct": true}, {"text": "Falso", "correct": false}], "explanation": "Los clásicos defendían el libre comercio industrial para abaratar la subsistencia obrera; los fisiócratas defendían la libre exportación agrícola para encarecer rentablemente el grano de los labriegos."}, {"id": 70, "part": "PARTE 5: EL PARADIGMA FISIÓCRATA (Preguntas 56 a 70)", "type": "single", "question": "¿Cuál fue la equivocación fundamental (talón de Aquiles) de la escuela fisiócrata analizada críticamente por Rubin y Marx?", "options": [{"text": "No cobrar impuestos indirectos a la exportación de metales.", "correct": false}, {"text": "Creer que los salarios debían subir de forma constante de acuerdo con el tipo de cambio.", "correct": false}, {"text": "Confundir la productividad física de la tierra (valores de uso) con la creación de valor de cambio, atribuyendo a la naturaleza la exclusividad en la producción de excedente.", "correct": true}, {"text": "Defender la vigencia feudal de los Estatutos de los Empleados.", "correct": false}], "explanation": "Al carecer de una teoría del valor-trabajo, los fisiócratas explicaron el plusvalor como si fuera un \"milagro de la vegetación natural\" en vez de ver en él la apropiación de trabajo humano no remunerado en la producción, lo que los llevó a negar erróneamente la productividad industrial."}];
+
+  /* Colores por bloque temático (tintes derivados de la paleta institucional) */
+  const PART_COLORS = {};
+  const PART_PALETTE = [
+    ["#003B70", "#00A8CC"],
+    ["#00A8CC", "#0f9d58"],
+    ["#003B70", "#FFC857"],
+    ["#0b4d86", "#00A8CC"],
+    ["#003B70", "#0b4d86"]
+  ];
+
+  /* -------------------------------------------------------------
+     2. MENSAJES MOTIVACIONALES SEGÚN DESEMPEÑO
+     ------------------------------------------------------------- */
+  const PERFORMANCE_TIERS = [
+    { min: 90, title: "Dominio sobresaliente", medal: "gold",
+      message: "Excelente desempeño. Mostrás un manejo sólido de los paradigmas económicos, el mercantilismo y la fisiocracia: estás en condiciones de rendir tu evaluación con confianza." },
+    { min: 75, title: "Muy buen desempeño", medal: "silver",
+      message: "Muy buen resultado. Dominás la mayoría de los conceptos centrales; repasá las preguntas falladas para llegar a un dominio completo del tema." },
+    { min: 60, title: "Desempeño aceptable", medal: "bronze",
+      message: "Vas por buen camino. Conocés las bases, pero conviene reforzar el repaso de los bloques con más errores antes de la evaluación." },
+    { min: 0, title: "A reforzar el estudio", medal: "book",
+      message: "Este es un buen punto de partida. Te recomendamos volver sobre el material de cátedra y repetir el entrenamiento: cada intento suma para consolidar los conceptos." }
+  ];
+
+  /* -------------------------------------------------------------
+     3. ESTADO DE LA SESIÓN
+     ------------------------------------------------------------- */
+  let sessionQuestions = [];
+  let currentIndex = 0;
+  let correctCount = 0;
+  let incorrectCount = 0;
+  let streak = 0;
+  let bestStreak = 0;
+  let answered = false;
+  let selectedSet = new Set();
+  let missedLog = [];
+
+  /* -------------------------------------------------------------
+     4. REFERENCIAS AL DOM
+     ------------------------------------------------------------- */
+  const el = (id) => document.getElementById(id);
+
+  const screens = {
+    start: el('screen-start'),
+    quiz: el('screen-quiz'),
+    results: el('screen-results')
+  };
+
+  const progressPanel = el('progressPanel');
+  const progressLabel = el('progressLabel');
+  const progressPct = el('progressPct');
+  const progressFill = el('progressFill');
+  const chipCorrect = el('chipCorrect');
+  const chipIncorrect = el('chipIncorrect');
+  const chipAccuracy = el('chipAccuracy');
+  const chipStreak = el('chipStreak');
+
+  const partBadge = el('partBadge');
+  const typeBadge = el('typeBadge');
+  const questionNumber = el('questionNumber');
+  const questionText = el('questionText');
+  const multiHint = el('multiHint');
+  const optionsList = el('optionsList');
+  const confirmRow = el('confirmRow');
+  const btnConfirmMulti = el('btnConfirmMulti');
+  const feedbackPanel = el('feedbackPanel');
+  const feedbackTitle = el('feedbackTitle');
+  const feedbackExplanation = el('feedbackExplanation');
+  const btnNext = el('btnNext');
+
+  /* -------------------------------------------------------------
+     5. UTILIDADES
+     ------------------------------------------------------------- */
+  function shuffle(array){
+    const a = array.slice();
+    for(let i = a.length - 1; i > 0; i--){
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+
+  function setsEqual(a, b){
+    if(a.size !== b.size) return false;
+    for(const v of a){ if(!b.has(v)) return false; }
+    return true;
+  }
+
+  function showScreen(name){
+    Object.entries(screens).forEach(([key, node]) => {
+      node.classList.toggle('active', key === name);
+    });
+    progressPanel.classList.toggle('visible', name === 'quiz');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function shortPartLabel(fullPart){
+    // "PARTE 3: EL APOGEO DEL MERCANTILISMO (...)" -> "Parte 3 · El apogeo del mercantilismo"
+    const m = fullPart.match(/PARTE (\d+):\s*([^(]+)/i);
+    if(!m) return fullPart;
+    const num = m[1];
+    const title = m[2].trim();
+    const titleCase = title.charAt(0) + title.slice(1).toLowerCase();
+    return `Parte ${num} · ${titleCase}`;
+  }
+
+  function typeLabel(type){
+    if(type === 'tf') return 'Verdadero o Falso';
+    if(type === 'multi') return 'Selección múltiple';
+    return 'Opción múltiple';
+  }
+
+  /* -------------------------------------------------------------
+     6. CONFETI (celebración elegante, sin librerías)
+     ------------------------------------------------------------- */
+  const confettiLayer = el('confettiLayer');
+  const CONFETTI_COLORS = ['#00A8CC', '#FFC857', '#003B70', '#0f9d58'];
+
+  function burstConfetti(count, spreadTop){
+    for(let i = 0; i < count; i++){
+      const piece = document.createElement('div');
+      piece.className = 'confetti-piece';
+      const left = Math.random() * 100;
+      const size = 6 + Math.random() * 6;
+      const duration = 2.2 + Math.random() * 1.6;
+      const delay = Math.random() * (spreadTop ? 0.6 : 0.05);
+      const color = CONFETTI_COLORS[Math.floor(Math.random() * CONFETTI_COLORS.length)];
+      piece.style.left = left + 'vw';
+      piece.style.width = size + 'px';
+      piece.style.height = (size * 1.6) + 'px';
+      piece.style.background = color;
+      piece.style.animationDuration = duration + 's';
+      piece.style.animationDelay = delay + 's';
+      piece.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+      confettiLayer.appendChild(piece);
+      setTimeout(() => piece.remove(), (duration + delay) * 1000 + 200);
+    }
+  }
+
+  /* -------------------------------------------------------------
+     7. ARRANQUE / REINICIO DE SESIÓN
+     ------------------------------------------------------------- */
+  function startQuiz(){
+    sessionQuestions = shuffle(QUESTIONS).map(q => {
+      const opts = q.type === 'tf' ? q.options.slice() : shuffle(q.options);
+      return Object.assign({}, q, { options: opts });
+    });
+    currentIndex = 0;
+    correctCount = 0;
+    incorrectCount = 0;
+    streak = 0;
+    bestStreak = 0;
+    missedLog = [];
+    el('reviewWrap').classList.remove('show');
+    el('reviewWrap').innerHTML = '';
+    el('btnToggleReview').textContent = 'Repasar preguntas falladas';
+    updateStatsChips();
+    showScreen('quiz');
+    renderQuestion();
+  }
+
+  /* -------------------------------------------------------------
+     8. RENDER DE PREGUNTA
+     ------------------------------------------------------------- */
+  function renderQuestion(){
+    const q = sessionQuestions[currentIndex];
+    answered = false;
+    selectedSet = new Set();
+
+    // Progreso (previo a responder la pregunta actual)
+    const total = sessionQuestions.length;
+    progressLabel.textContent = `Pregunta ${currentIndex + 1} de ${total}`;
+    const pctSoFar = Math.round((currentIndex / total) * 100);
+    progressPct.textContent = `· ${pctSoFar}% completado`;
+    progressFill.style.width = pctSoFar + '%';
+
+    // Color del bloque temático
+    const partIndex = Math.max(0, Math.min(4, Math.ceil(q.id / 15) - (q.id % 15 === 0 ? 0 : 0)));
+    const paletteIdx = Math.floor((q.id - 1) / 15) % PART_PALETTE.length;
+    const [ca, cb] = PART_PALETTE[paletteIdx];
+    el('questionCard').style.setProperty('--part-color-a', ca);
+    el('questionCard').style.setProperty('--part-color-b', cb);
+
+    partBadge.textContent = shortPartLabel(q.part);
+    typeBadge.textContent = typeLabel(q.type);
+    questionNumber.textContent = `Pregunta ${currentIndex + 1}`;
+    questionText.textContent = q.question;
+    multiHint.style.display = q.type === 'multi' ? 'inline-flex' : 'none';
+
+    // Render de opciones
+    optionsList.innerHTML = '';
+    q.options.forEach((opt, idx) => {
+      const btn = document.createElement('button');
+      btn.className = 'option-btn';
+      btn.type = 'button';
+      btn.setAttribute('role', 'listitem');
+      btn.dataset.idx = idx;
+
+      const letter = document.createElement('span');
+      letter.className = 'option-letter';
+      letter.textContent = q.type === 'tf' ? opt.text.charAt(0) : String.fromCharCode(65 + idx);
+
+      const text = document.createElement('span');
+      text.className = 'option-text';
+      text.textContent = opt.text;
+
+      const icon = document.createElement('span');
+      icon.className = 'option-icon';
+      icon.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg>';
+
+      btn.appendChild(letter);
+      btn.appendChild(text);
+      btn.appendChild(icon);
+      btn.addEventListener('click', () => handleOptionClick(idx));
+      optionsList.appendChild(btn);
+    });
+
+    // Botón confirmar (solo multi)
+    confirmRow.style.display = q.type === 'multi' ? 'flex' : 'none';
+    btnConfirmMulti.disabled = true;
+
+    // Ocultar feedback y botón siguiente
+    feedbackPanel.classList.remove('show', 'correct', 'incorrect');
+    btnNext.style.display = 'none';
+    btnNext.textContent = (currentIndex + 1 >= total) ? 'Ver resultados 🏆' : 'Siguiente pregunta';
+  }
+
+  /* -------------------------------------------------------------
+     9. INTERACCIÓN CON OPCIONES
+     ------------------------------------------------------------- */
+  function handleOptionClick(idx){
+    if(answered) return;
+    const q = sessionQuestions[currentIndex];
+
+    if(q.type === 'multi'){
+      const btn = optionsList.querySelector(`[data-idx="${idx}"]`);
+      if(selectedSet.has(idx)){
+        selectedSet.delete(idx);
+        btn.classList.remove('picked');
+      } else {
+        selectedSet.add(idx);
+        btn.classList.add('picked');
+      }
+      btnConfirmMulti.disabled = selectedSet.size === 0;
+      return;
+    }
+
+    selectedSet = new Set([idx]);
+    evaluateAnswer();
+  }
+
+  btnConfirmMulti.addEventListener('click', () => {
+    if(selectedSet.size === 0 || answered) return;
+    evaluateAnswer();
+  });
+
+  /* -------------------------------------------------------------
+     10. EVALUACIÓN DE RESPUESTA
+     ------------------------------------------------------------- */
+  function evaluateAnswer(){
+    answered = true;
+    const q = sessionQuestions[currentIndex];
+    const correctIdx = new Set();
+    q.options.forEach((o, i) => { if(o.correct) correctIdx.add(i); });
+
+    const isCorrect = setsEqual(selectedSet, correctIdx);
+
+    // Pintar opciones
+    const buttons = optionsList.querySelectorAll('.option-btn');
+    buttons.forEach((btn, i) => {
+      btn.disabled = true;
+      btn.classList.remove('picked');
+      const isThisCorrect = correctIdx.has(i);
+      const wasSelected = selectedSet.has(i);
+      if(isThisCorrect){
+        btn.classList.add('is-correct', 'pulse');
+      } else if(wasSelected && !isThisCorrect){
+        btn.classList.add('is-wrong', 'shake');
+      } else {
+        btn.classList.add('is-dim');
+      }
+    });
+
+    confirmRow.style.display = 'none';
+
+    // Actualizar contadores
+    if(isCorrect){
+      correctCount++;
+      streak++;
+      bestStreak = Math.max(bestStreak, streak);
+      burstConfetti(16, false);
+    } else {
+      incorrectCount++;
+      streak = 0;
+      missedLog.push({
+        question: q.question,
+        yourAnswer: q.options.filter((o, i) => selectedSet.has(i)).map(o => o.text).join(' · ') || '(sin respuesta)',
+        correctAnswer: q.options.filter(o => o.correct).map(o => o.text).join(' · '),
+        explanation: q.explanation
+      });
+    }
+
+    updateStatsChips();
+
+    // Avanzar la barra de progreso al responder
+    const total = sessionQuestions.length;
+    const pctNow = Math.round(((currentIndex + 1) / total) * 100);
+    progressPct.textContent = `· ${pctNow}% completado`;
+    progressFill.style.width = pctNow + '%';
+
+    // Panel de retroalimentación
+    feedbackPanel.classList.add('show', isCorrect ? 'correct' : 'incorrect');
+    feedbackPanel.classList.remove(isCorrect ? 'incorrect' : 'correct');
+    feedbackTitle.innerHTML = isCorrect
+      ? '✅ ¡Correcto!'
+      : '❌ Incorrecto — revisá la respuesta correcta arriba';
+    feedbackExplanation.innerHTML = q.explanation
+      ? `<strong>Justificación:</strong> ${escapeHtml(q.explanation)}`
+      : '';
+
+    btnNext.style.display = 'inline-flex';
+    btnNext.focus({ preventScroll: true });
+  }
+
+  function escapeHtml(str){
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+  }
+
+  /* -------------------------------------------------------------
+     11. ESTADÍSTICAS EN VIVO
+     ------------------------------------------------------------- */
+  function updateStatsChips(){
+    const answeredCount = correctCount + incorrectCount;
+    const accuracy = answeredCount > 0 ? Math.round((correctCount / answeredCount) * 100) : 0;
+    chipCorrect.textContent = `✅ Correctas: ${correctCount}`;
+    chipIncorrect.textContent = `❌ Incorrectas: ${incorrectCount}`;
+    chipAccuracy.textContent = `🎯 Aciertos: ${accuracy}%`;
+    if(streak >= 3){
+      chipStreak.style.display = 'inline-flex';
+      chipStreak.textContent = `🔥 Racha: ${streak}`;
+    } else {
+      chipStreak.style.display = 'none';
+    }
+  }
+
+  /* -------------------------------------------------------------
+     12. AVANCE Y RESULTADOS FINALES
+     ------------------------------------------------------------- */
+  btnNext.addEventListener('click', () => {
+    if(currentIndex + 1 >= sessionQuestions.length){
+      showResults();
+    } else {
+      currentIndex++;
+      renderQuestion();
+    }
+  });
+
+  function pickTier(pct){
+    return PERFORMANCE_TIERS.find(t => pct >= t.min) || PERFORMANCE_TIERS[PERFORMANCE_TIERS.length - 1];
+  }
+
+  const MEDAL_ICONS = {
+    /* Trofeo (desempeño sobresaliente) */
+    gold: '<svg viewBox="0 0 24 24" fill="none" stroke="#5b3d00" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4h8v5a4 4 0 01-8 0V4z"/><path d="M8 5H5.5A1.5 1.5 0 004 6.5c0 1.9 1.4 3.4 3.2 3.7"/><path d="M16 5h2.5A1.5 1.5 0 0120 6.5c0 1.9-1.4 3.4-3.2 3.7"/><path d="M12 13v3"/><path d="M9 20h6"/><path d="M9.5 20c0-2 1-3 2.5-3s2.5 1 2.5 3"/></svg>',
+    /* Medalla con cinta (muy buen desempeño) */
+    silver: '<svg viewBox="0 0 24 24" fill="none" stroke="#3b4b5c" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 3L11 10M15.5 3L13 10"/><circle cx="12" cy="15" r="6"/><path d="M12 12v6M9.5 15h5"/></svg>',
+    /* Cinta / listón (desempeño aceptable) */
+    bronze: '<svg viewBox="0 0 24 24" fill="none" stroke="#6b3f14" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="5.5"/><path d="M9 13.5L7 21l5-2.6L17 21l-2-7.5"/></svg>',
+    /* Libro abierto (a reforzar el estudio) */
+    book: '<svg viewBox="0 0 24 24" fill="none" stroke="#003B70" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6.2c-1.7-1.1-3.6-1.7-5.6-1.9-.8-.1-1.4.5-1.4 1.3v11.6c0 .7.5 1.2 1.2 1.3 2.1.2 4.1.8 5.8 2 1.7-1.2 3.7-1.8 5.8-2 .7-.1 1.2-.6 1.2-1.3V5.6c0-.8-.6-1.4-1.4-1.3-2 .2-3.9.8-5.6 1.9z"/><path d="M12 6.2V19"/></svg>'
+  };
+
+  function showResults(){
+    const total = sessionQuestions.length;
+    const pct = Math.round((correctCount / total) * 100);
+    const tier = pickTier(pct);
+
+    el('scorePercent').textContent = pct + '%';
+    el('resultsTitle').textContent = tier.title;
+    el('resultsMessage').textContent = tier.message;
+    el('resultsMedal').innerHTML = MEDAL_ICONS[tier.medal];
+    el('resultsMedal').className = 'results-medal medal-' + tier.medal;
+    el('finalCorrect').textContent = correctCount;
+    el('finalIncorrect').textContent = incorrectCount;
+    el('finalStreak').textContent = bestStreak;
+
+    // Anillo de puntaje (circunferencia r=80 -> 502.4)
+    const ring = el('scoreRingFill');
+    const circumference = 502.4;
+    const offset = circumference - (pct / 100) * circumference;
+    ring.style.strokeDashoffset = circumference;
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => { ring.style.strokeDashoffset = offset; });
+    });
+
+    // Repaso de errores
+    const reviewWrap = el('reviewWrap');
+    reviewWrap.innerHTML = '';
+    if(missedLog.length === 0){
+      reviewWrap.innerHTML = '<p style="text-align:center;color:var(--color-text-faint);font-size:13.5px;">¡Sin errores para repasar — resultado perfecto!</p>';
+    } else {
+      missedLog.forEach((m) => {
+        const item = document.createElement('div');
+        item.className = 'review-item';
+        item.innerHTML = `
+          <div class="rq">${escapeHtml(m.question)}</div>
+          <div class="ra wrong-answer">Tu respuesta: ${escapeHtml(m.yourAnswer)}</div>
+          <div class="ra right-answer">Respuesta correcta: ${escapeHtml(m.correctAnswer)}</div>
+          <div class="re">${escapeHtml(m.explanation)}</div>
+        `;
+        reviewWrap.appendChild(item);
+      });
+    }
+
+    showScreen('results');
+
+    // Celebración final proporcional al desempeño
+    burstConfetti(pct >= 60 ? 90 : 45, true);
+    setTimeout(() => burstConfetti(pct >= 60 ? 60 : 30, true), 350);
+  }
+
+  /* -------------------------------------------------------------
+     13. REINICIO Y REPASO
+     ------------------------------------------------------------- */
+  el('btnRestart').addEventListener('click', startQuiz);
+
+  el('btnToggleReview').addEventListener('click', () => {
+    const wrap = el('reviewWrap');
+    const showing = wrap.classList.toggle('show');
+    el('btnToggleReview').textContent = showing ? 'Ocultar repaso' : 'Repasar preguntas falladas';
+    if(showing){ wrap.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }
+  });
+
+  /* -------------------------------------------------------------
+     14. INICIALIZACIÓN
+     ------------------------------------------------------------- */
+  el('statTotalQuestions').textContent = QUESTIONS.length;
+  el('btnStart').addEventListener('click', startQuiz);
+
+  // Soporte de teclado básico: 1-4 selecciona opción, Enter avanza / confirma
+  document.addEventListener('keydown', (e) => {
+    if(!screens.quiz.classList.contains('active')) return;
+    if(['1','2','3','4'].includes(e.key)){
+      const idx = parseInt(e.key, 10) - 1;
+      const btn = optionsList.querySelector(`[data-idx="${idx}"]`);
+      if(btn && !answered) btn.click();
+    } else if(e.key === 'Enter'){
+      if(btnNext.style.display !== 'none'){ btnNext.click(); }
+      else if(confirmRow.style.display !== 'none' && !btnConfirmMulti.disabled){ btnConfirmMulti.click(); }
+    }
+  });
+
+})();
+</script>
+</body>
+</html>

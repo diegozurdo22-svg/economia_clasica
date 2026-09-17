@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Economía Clásica — Materiales de cátedra</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:        #EDE3CC;
+    --paper-deep:   #E2D5AF;
+    --paper-shadow: #D8C79C;
+    --ink:          #23201B;
+    --ink-soft:     #4B443A;
+    --ink-faint:    #857A66;
+    --brass:        #8C6D2F;
+    --brass-light:  #A9884A;
+    --oxblood:      #6E2430;
+    --line:         #B8A576;
+  }
+
+  *{ box-sizing: border-box; }
+
+  html, body{
+    margin:0; padding:0;
+    background: var(--paper);
+    color: var(--ink);
+  }
+
+  body{
+    font-family: 'EB Garamond', Georgia, 'Times New Roman', serif;
+    font-size: 19px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    background-image:
+      radial-gradient(circle at 15% 8%, rgba(140,109,47,0.07), transparent 40%),
+      radial-gradient(circle at 85% 92%, rgba(110,36,48,0.06), transparent 45%);
+  }
+
+  .wrap{
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 6.5vh 28px 10vh;
+  }
+
+  /* ---------- Encabezado tipo portada ---------- */
+
+  header{
+    text-align: center;
+    margin-bottom: 54px;
+  }
+
+  .kicker{
+    font-family: 'EB Garamond', serif;
+    font-style: italic;
+    font-size: 16px;
+    color: var(--ink-faint);
+    margin: 0 0 10px;
+  }
+
+  h1{
+    font-family: 'Libre Baskerville', Georgia, serif;
+    font-weight: 700;
+    font-size: clamp(2.4rem, 6vw, 3.6rem);
+    line-height: 1.08;
+    margin: 0 0 16px;
+    letter-spacing: 0.01em;
+  }
+
+  .dek{
+    font-size: 18px;
+    color: var(--ink-soft);
+    max-width: 46ch;
+    margin: 0 auto;
+  }
+
+  .rule{
+    border: none;
+    height: 1px;
+    background: var(--line);
+    margin: 34px auto 0;
+    width: 100%;
+  }
+
+  .rule-double{
+    margin-top: 8px;
+    width: 60%;
+  }
+
+  /* ---------- Listado de capítulos ---------- */
+
+  .toc{
+    margin-top: 8px;
+  }
+
+  .entry{
+    display: grid;
+    grid-template-columns: 52px 1fr;
+    gap: 4px 22px;
+    padding: 36px 0;
+    border-bottom: 1px solid var(--line);
+    align-items: start;
+  }
+
+  .entry:last-child{
+    border-bottom: none;
+  }
+
+  .num{
+    font-family: 'Libre Baskerville', Georgia, serif;
+    font-size: 26px;
+    color: var(--brass);
+    padding-top: 2px;
+  }
+
+  .entry h2{
+    font-family: 'Libre Baskerville', Georgia, serif;
+    font-weight: 700;
+    font-size: 25px;
+    margin: 0 0 6px;
+    line-height: 1.25;
+  }
+
+  .entry .tag{
+    display: block;
+    font-style: italic;
+    color: var(--ink-faint);
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+
+  .entry p{
+    margin: 0 0 16px;
+    color: var(--ink-soft);
+    max-width: 52ch;
+  }
+
+  .entry a.open{
+    font-family: 'EB Garamond', serif;
+    font-size: 17px;
+    color: var(--oxblood);
+    text-decoration: none;
+    border-bottom: 1px solid var(--oxblood);
+    padding-bottom: 1px;
+    transition: opacity .15s ease;
+  }
+
+  .entry a.open:hover{
+    opacity: 0.65;
+  }
+
+  .entry a.open:focus-visible{
+    outline: 2px solid var(--brass);
+    outline-offset: 4px;
+  }
+
+  /* ---------- Pie ---------- */
+
+  footer{
+    margin-top: 60px;
+    text-align: center;
+    font-size: 15px;
+    color: var(--ink-faint);
+    font-style: italic;
+  }
+
+  @media (max-width: 520px){
+    body{ font-size: 17px; }
+    .entry{
+      grid-template-columns: 36px 1fr;
+      gap: 2px 14px;
+      padding: 28px 0;
+    }
+    .num{ font-size: 21px; }
+    .entry h2{ font-size: 21px; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .entry a.open{ transition: none; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="wrap">
+
+    <header>
+      <p class="kicker">Cátedra</p>
+      <h1>Economía Clásica</h1>
+      <p class="dek">Materiales interactivos de práctica: del mercantilismo a la teoría del valor de Ricardo.</p>
+      <hr class="rule">
+      <hr class="rule rule-double">
+    </header>
+
+    <main class="toc">
+
+      <article class="entry">
+        <div class="num">I</div>
+        <div>
+          <span class="tag">Entrenador académico — Unidad 1</span>
+          <h2>Mercantilistas y Fisiócratas</h2>
+          <p>Práctica interactiva de cátedra para repasar las ideas centrales del mercantilismo y la escuela fisiocrática.</p>
+          <a class="open" href="unidad-1-mercantilistas-fisiocratas.html">Abrir el entrenador</a>
+        </div>
+      </article>
+
+      <article class="entry">
+        <div class="num">II</div>
+        <div>
+          <span class="tag">Entrenador académico — Competencia por equipos</span>
+          <h2>Adam Smith</h2>
+          <p>Dinámica de competencia por equipos para poner a prueba lo aprendido sobre la obra de Adam Smith.</p>
+          <a class="open" href="competencia-adam-smith.html">Abrir la competencia</a>
+        </div>
+      </article>
+
+      <article class="entry">
+        <div class="num">III</div>
+        <div>
+          <span class="tag">Museo interactivo</span>
+          <h2>David Ricardo</h2>
+          <p>Un recorrido por el contexto, la teoría del valor trabajo, la renta diferencial y la ventaja comparativa en la obra de Ricardo.</p>
+          <a class="open" href="museo-david-ricardo.html">Entrar al museo</a>
+        </div>
+      </article>
+
+    </main>
+
+    <footer>
+      Material de cátedra — Economía Clásica
+    </footer>
+
+  </div>
+
+</body>
+</html>
