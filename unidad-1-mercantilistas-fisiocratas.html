@@ -18,29 +18,29 @@
 /* =====================================================================
    ENTRENADOR ACADÉMICO UNLa
    Hoja de estilos única — Sistema de diseño académico-tecnológico
-   Paleta institucional: Azul UNLa / Cian tecnológico / Dorado destaque
+   Paleta institucional: Granate / Dorado Elegante / Beige Pergamino / Negro Profundo
    ===================================================================== */
 
 :root{
-  /* --- Paleta institucional (fija por consigna) --- */
-  --color-primary:      #003B70;
-  --color-primary-dark: #00284d;
-  --color-primary-soft: #0b4d86;
-  --color-secondary:    #00A8CC;
-  --color-accent:       #FFC857;
-  --color-bg:           #F8FAFC;
-  --color-text:         #1E293B;
+  /* --- Paleta institucional: Granate + Dorado + Beige + Negro --- */
+  --color-primary:      #6B1B34;
+  --color-primary-dark: #4a121f;
+  --color-primary-soft: #8B2545;
+  --color-secondary:    #8B4513;
+  --color-accent:       #D4A574;
+  --color-bg:           #FAF6F1;
+  --color-text:         #2C2C2C;
 
-  /* --- Derivados de la paleta (mismos tonos, distinta opacidad/mezcla) --- */
-  --color-text-soft:    #47566b;
-  --color-text-faint:   #7c8aa0;
+  /* --- Derivados de la paleta (tonos cálidos, históricos) --- */
+  --color-text-soft:    #5a5a5a;
+  --color-text-faint:   #8a8a8a;
   --color-surface:      #ffffff;
-  --color-surface-alt:  #eef4fa;
-  --color-border:       #e1e9f2;
-  --color-success:      #0f9d58;
-  --color-success-bg:   #e7f7ee;
-  --color-error:        #d64545;
-  --color-error-bg:     #fdecec;
+  --color-surface-alt:  #f5f0eb;
+  --color-border:       #e8ddf7;
+  --color-success:      #6B8E23;
+  --color-success-bg:   #f0f5e8;
+  --color-error:        #a85a5a;
+  --color-error-bg:     #f9eded;
 
   /* --- Tipografía --- */
   --font-title: 'Cinzel', 'Iowan Old Style', Georgia, serif;
@@ -50,9 +50,9 @@
   --radius-lg: 22px;
   --radius-md: 14px;
   --radius-sm: 9px;
-  --shadow-card: 0 20px 45px -18px rgba(0, 59, 112, 0.28), 0 2px 8px rgba(0,59,112,0.06);
-  --shadow-soft: 0 8px 20px -10px rgba(0, 59, 112, 0.18);
-  --shadow-btn:  0 10px 22px -10px rgba(0, 59, 112, 0.35);
+  --shadow-card: 0 20px 45px -18px rgba(107, 27, 52, 0.28), 0 2px 8px rgba(107, 27, 52,0.06);
+  --shadow-soft: 0 8px 20px -10px rgba(107, 27, 52, 0.18);
+  --shadow-btn:  0 10px 22px -10px rgba(107, 27, 52, 0.35);
   --max-width: 880px;
 }
 
@@ -83,11 +83,11 @@ button{ font-family:inherit; cursor:pointer; }
   inset:0;
   z-index:-3;
   background:
-    radial-gradient(circle at 12% 8%,  rgba(0,168,204,0.10), transparent 40%),
-    radial-gradient(circle at 92% 18%, rgba(255,200,87,0.14), transparent 38%),
-    radial-gradient(circle at 80% 92%, rgba(0,59,112,0.08),  transparent 45%),
-    radial-gradient(circle at 6% 85%,  rgba(0,168,204,0.09), transparent 40%),
-    linear-gradient(180deg, #f3f7fc 0%, var(--color-bg) 38%, #f2f6fb 100%);
+    radial-gradient(circle at 12% 8%,  rgba(139, 69, 19, 0.07), transparent 40%),
+    radial-gradient(circle at 92% 18%, rgba(212, 165, 116, 0.10), transparent 38%),
+    radial-gradient(circle at 80% 92%, rgba(107, 27, 52, 0.06), transparent 45%),
+    radial-gradient(circle at 6% 85%,  rgba(139, 69, 19, 0.06), transparent 40%),
+    linear-gradient(180deg, #fdfbf7 0%, var(--color-bg) 35%, #faf6f1 100%);
 }
 
 /* Textura tipo "plano arquitectónico": grilla de puntos muy sutil */
@@ -96,7 +96,7 @@ button{ font-family:inherit; cursor:pointer; }
   inset:0;
   z-index:-2;
   opacity:0.55;
-  background-image: radial-gradient(rgba(0,59,112,0.09) 1px, transparent 1px);
+  background-image: radial-gradient(rgba(107, 27, 52,0.09) 1px, transparent 1px);
   background-size: 26px 26px;
   mask-image: radial-gradient(ellipse 80% 60% at 50% 20%, black 40%, transparent 90%);
 }
@@ -109,8 +109,8 @@ button{ font-family:inherit; cursor:pointer; }
   z-index:-2;
   pointer-events:none;
   background:
-    linear-gradient(115deg, rgba(0,59,112,0.05) 0%, transparent 55%),
-    linear-gradient(245deg, rgba(0,168,204,0.06) 0%, transparent 55%);
+    linear-gradient(115deg, rgba(107, 27, 52,0.05) 0%, transparent 55%),
+    linear-gradient(245deg, rgba(139, 69, 19,0.06) 0%, transparent 55%);
 }
 
 /* =====================================================================
@@ -166,10 +166,10 @@ button{ font-family:inherit; cursor:pointer; }
 .site-header{
   position:relative;
   background:
-    linear-gradient(120deg, var(--color-primary) 0%, var(--color-primary-soft) 62%, #075c8a 100%);
+    linear-gradient(120deg, var(--color-primary) 0%, var(--color-primary-soft) 62%, #5a1628 100%);
   color:#fff;
   padding:26px 0 30px;
-  box-shadow:0 12px 30px -14px rgba(0,59,112,0.55);
+  box-shadow:0 12px 30px -14px rgba(107, 27, 52,0.55);
 }
 
 .site-header::after{
@@ -233,7 +233,7 @@ button{ font-family:inherit; cursor:pointer; }
   width:46px;
   height:46px;
   border-radius:50%;
-  background:radial-gradient(circle at 32% 28%, #ffffff 0%, #eaf6fb 38%, var(--color-secondary) 100%);
+  background:radial-gradient(circle at 32% 28%, #ffffff 0%, #f5ede6 38%, var(--color-secondary) 100%);
   display:flex;
   align-items:center;
   justify-content:center;
@@ -323,7 +323,7 @@ button{ font-family:inherit; cursor:pointer; }
 }
 .chip.correct{ color:var(--color-success); background:var(--color-success-bg); border-color:transparent; }
 .chip.incorrect{ color:var(--color-error); background:var(--color-error-bg); border-color:transparent; }
-.chip.streak{ color:#9a6a00; background:#fff5df; border-color:transparent; }
+.chip.streak{ color:#8B6914; background:#f9f3e8; border-color:transparent; }
 
 .progress-track{
   width:100%;
@@ -331,7 +331,7 @@ button{ font-family:inherit; cursor:pointer; }
   border-radius:100px;
   background:var(--color-surface-alt);
   overflow:hidden;
-  box-shadow:inset 0 1px 3px rgba(0,59,112,0.12);
+  box-shadow:inset 0 1px 3px rgba(107, 27, 52,0.12);
 }
 .progress-fill{
   height:100%;
@@ -386,7 +386,7 @@ main{
   top:-60px; right:-60px;
   width:220px; height:220px;
   border-radius:50%;
-  background:radial-gradient(circle, rgba(0,168,204,0.16), transparent 70%);
+  background:radial-gradient(circle, rgba(139, 69, 19,0.16), transparent 70%);
 }
 .hero-card::after{
   content:"";
@@ -394,7 +394,7 @@ main{
   bottom:-70px; left:-70px;
   width:220px; height:220px;
   border-radius:50%;
-  background:radial-gradient(circle, rgba(255,200,87,0.20), transparent 70%);
+  background:radial-gradient(circle, rgba(212, 165, 116,0.20), transparent 70%);
 }
 
 .hero-kicker{
@@ -406,7 +406,7 @@ main{
   letter-spacing:0.1em;
   text-transform:uppercase;
   color:var(--color-secondary);
-  background:#e7f8fc;
+  background:#f4ece5;
   padding:7px 14px;
   border-radius:100px;
   margin-bottom:18px;
@@ -503,9 +503,9 @@ main{
 .btn-primary:hover{ filter:brightness(1.08); transform:translateY(-2px); }
 
 .btn-accent{
-  color:#5b3d00;
-  background:linear-gradient(120deg, #ffd581 0%, var(--color-accent) 100%);
-  box-shadow:0 10px 22px -10px rgba(255,200,87,0.55);
+  color:#6b4423;
+  background:linear-gradient(120deg, #dbb896 0%, var(--color-accent) 100%);
+  box-shadow:0 10px 22px -10px rgba(212, 165, 116,0.55);
 }
 .btn-accent:hover{ filter:brightness(1.05); transform:translateY(-2px); }
 
@@ -570,8 +570,8 @@ main{
   font-weight:700;
   padding:6px 13px;
   border-radius:100px;
-  background:#eaf9fc;
-  color:#026b85;
+  background:#f6f1eb;
+  color:#6B4423;
 }
 
 .question-number{
@@ -596,7 +596,7 @@ main{
   align-items:center;
   gap:6px;
   font-size:12.5px;
-  color:#9a6a00;
+  color:#8B6914;
   background:#fff8e8;
   border:1px solid #ffe8b0;
   padding:6px 12px;
@@ -630,9 +630,9 @@ main{
 }
 .option-btn:hover:not(:disabled){
   border-color:var(--color-secondary);
-  background:#f5fcfe;
+  background:#f9f4ef;
   transform:translateY(-1px);
-  box-shadow:0 8px 18px -12px rgba(0,168,204,0.45);
+  box-shadow:0 8px 18px -12px rgba(139, 69, 19, 0.35);
 }
 .option-btn:disabled{ cursor:default; }
 
@@ -666,7 +666,7 @@ main{
 /* Estado: seleccionada (previo a confirmar, solo multi) */
 .option-btn.picked{
   border-color:var(--color-secondary);
-  background:#eefbfd;
+  background:#f4ede6;
 }
 .option-btn.picked .option-letter{
   background:var(--color-secondary);
@@ -742,7 +742,7 @@ main{
   font-size:13.75px;
   line-height:1.6;
   color:var(--color-text-soft);
-  border-left:3px solid rgba(0,59,112,0.18);
+  border-left:3px solid rgba(107, 27, 52,0.18);
   padding-left:12px;
 }
 .feedback-explanation strong{ color:var(--color-text); }
@@ -774,14 +774,14 @@ main{
   border-radius:50%;
   display:flex; align-items:center; justify-content:center;
   background:radial-gradient(circle at 35% 30%, #fff8e2, var(--color-accent) 75%);
-  box-shadow:0 14px 30px -10px rgba(255,200,87,0.55);
+  box-shadow:0 14px 30px -10px rgba(212, 165, 116,0.55);
 }
 .results-medal svg{ width:50px; height:50px; }
 
 /* Variantes de medalla según el nivel de desempeño */
 .results-medal.medal-gold{
   background:radial-gradient(circle at 35% 30%, #fff8e2, var(--color-accent) 75%);
-  box-shadow:0 14px 30px -10px rgba(255,200,87,0.6);
+  box-shadow:0 14px 30px -10px rgba(212, 165, 116,0.6);
 }
 .results-medal.medal-silver{
   background:radial-gradient(circle at 35% 30%, #f4f8fb, #b9c8d6 75%);
@@ -793,7 +793,7 @@ main{
 }
 .results-medal.medal-book{
   background:radial-gradient(circle at 35% 30%, #eaf4fa, var(--color-secondary) 88%);
-  box-shadow:0 14px 30px -10px rgba(0,168,204,0.45);
+  box-shadow:0 14px 30px -10px rgba(139, 69, 19,0.45);
 }
 
 .score-ring-wrap{
@@ -972,7 +972,6 @@ main{
 </style>
 </head>
 <body>
-<a href="index.html" style="position:fixed;top:10px;left:10px;z-index:99999;font-family:Georgia,'Times New Roman',serif;font-size:13px;letter-spacing:.02em;background:#23201B;color:#EDE3CC;padding:7px 14px;border-radius:3px;text-decoration:none;box-shadow:0 3px 10px rgba(0,0,0,.35);opacity:.88;">&larr; Índice del curso</a>
 
 <!-- Fondo decorativo (no interactivo) -->
 <div class="bg-layer" aria-hidden="true"></div>
@@ -982,13 +981,13 @@ main{
 <!-- Columnas griegas laterales decorativas -->
 <div class="greek-columns left" aria-hidden="true">
   <svg viewBox="0 0 120 640" preserveAspectRatio="xMidYMax meet">
-    <g fill="#003B70">
+    <g fill="#6B1B34">
       <!-- base -->
       <rect x="10" y="612" width="100" height="16" rx="2"/>
       <rect x="20" y="596" width="80" height="14" rx="2"/>
       <!-- fuste con estrías -->
       <rect x="34" y="120" width="52" height="476" rx="3"/>
-      <g stroke="#F8FAFC" stroke-width="2" opacity="0.5">
+      <g stroke="#FAF6F1" stroke-width="2" opacity="0.5">
         <line x1="44" y1="120" x2="44" y2="596"/>
         <line x1="54" y1="120" x2="54" y2="596"/>
         <line x1="60" y1="120" x2="60" y2="596"/>
@@ -1006,11 +1005,11 @@ main{
 </div>
 <div class="greek-columns right" aria-hidden="true">
   <svg viewBox="0 0 120 640" preserveAspectRatio="xMidYMax meet">
-    <g fill="#003B70">
+    <g fill="#6B1B34">
       <rect x="10" y="612" width="100" height="16" rx="2"/>
       <rect x="20" y="596" width="80" height="14" rx="2"/>
       <rect x="34" y="120" width="52" height="476" rx="3"/>
-      <g stroke="#F8FAFC" stroke-width="2" opacity="0.5">
+      <g stroke="#FAF6F1" stroke-width="2" opacity="0.5">
         <line x1="44" y1="120" x2="44" y2="596"/>
         <line x1="54" y1="120" x2="54" y2="596"/>
         <line x1="60" y1="120" x2="60" y2="596"/>
@@ -1040,9 +1039,9 @@ main{
         <span class="logo-mark">
           <!-- Monograma institucional UNLa (marca de referencia, en la paleta oficial) -->
           <svg viewBox="0 0 48 48" fill="none">
-            <path d="M24 4 L44 14 L24 24 L4 14 Z" fill="#003B70"/>
-            <path d="M10 18 V30 C10 36 16 40 24 40 C32 40 38 36 38 30 V18" stroke="#003B70" stroke-width="3" fill="none" stroke-linecap="round"/>
-            <circle cx="24" cy="24" r="3.2" fill="#00A8CC"/>
+            <path d="M24 4 L44 14 L24 24 L4 14 Z" fill="#6B1B34"/>
+            <path d="M10 18 V30 C10 36 16 40 24 40 C32 40 38 36 38 30 V18" stroke="#6B1B34" stroke-width="3" fill="none" stroke-linecap="round"/>
+            <circle cx="24" cy="24" r="3.2" fill="#8B4513"/>
           </svg>
         </span>
         <span class="logo-text">
@@ -1143,15 +1142,15 @@ main{
     <section class="screen" id="screen-results">
       <div class="results-card">
         <div class="results-medal" id="resultsMedal">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#003B70" stroke-width="1.6"><circle cx="12" cy="9" r="6.5"/><path d="M8.5 14.5L7 22l5-3 5 3-1.5-7.5"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="#6B1B34" stroke-width="1.6"><circle cx="12" cy="9" r="6.5"/><path d="M8.5 14.5L7 22l5-3 5 3-1.5-7.5"/></svg>
         </div>
 
         <div class="score-ring-wrap">
           <svg viewBox="0 0 180 180">
             <defs>
               <linearGradient id="ringGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stop-color="#00A8CC"/>
-                <stop offset="100%" stop-color="#FFC857"/>
+                <stop offset="0%" stop-color="#8B4513"/>
+                <stop offset="100%" stop-color="#D4A574"/>
               </linearGradient>
             </defs>
             <circle class="score-ring-bg" cx="90" cy="90" r="80"/>
@@ -1211,11 +1210,11 @@ main{
   /* Colores por bloque temático (tintes derivados de la paleta institucional) */
   const PART_COLORS = {};
   const PART_PALETTE = [
-    ["#003B70", "#00A8CC"],
-    ["#00A8CC", "#0f9d58"],
-    ["#003B70", "#FFC857"],
-    ["#0b4d86", "#00A8CC"],
-    ["#003B70", "#0b4d86"]
+    ["#6B1B34", "#8B4513"],
+    ["#8B4513", "#6B8E23"],
+    ["#6B1B34", "#D4A574"],
+    ["#8B2545", "#8B4513"],
+    ["#6B1B34", "#8B2545"]
   ];
 
   /* -------------------------------------------------------------
@@ -1324,7 +1323,7 @@ main{
      6. CONFETI (celebración elegante, sin librerías)
      ------------------------------------------------------------- */
   const confettiLayer = el('confettiLayer');
-  const CONFETTI_COLORS = ['#00A8CC', '#FFC857', '#003B70', '#0f9d58'];
+  const CONFETTI_COLORS = ['#8B4513', '#D4A574', '#6B1B34', '#6B8E23'];
 
   function burstConfetti(count, spreadTop){
     for(let i = 0; i < count; i++){
@@ -1573,13 +1572,13 @@ main{
 
   const MEDAL_ICONS = {
     /* Trofeo (desempeño sobresaliente) */
-    gold: '<svg viewBox="0 0 24 24" fill="none" stroke="#5b3d00" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4h8v5a4 4 0 01-8 0V4z"/><path d="M8 5H5.5A1.5 1.5 0 004 6.5c0 1.9 1.4 3.4 3.2 3.7"/><path d="M16 5h2.5A1.5 1.5 0 0120 6.5c0 1.9-1.4 3.4-3.2 3.7"/><path d="M12 13v3"/><path d="M9 20h6"/><path d="M9.5 20c0-2 1-3 2.5-3s2.5 1 2.5 3"/></svg>',
+    gold: '<svg viewBox="0 0 24 24" fill="none" stroke="#6b4423" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4h8v5a4 4 0 01-8 0V4z"/><path d="M8 5H5.5A1.5 1.5 0 004 6.5c0 1.9 1.4 3.4 3.2 3.7"/><path d="M16 5h2.5A1.5 1.5 0 0120 6.5c0 1.9-1.4 3.4-3.2 3.7"/><path d="M12 13v3"/><path d="M9 20h6"/><path d="M9.5 20c0-2 1-3 2.5-3s2.5 1 2.5 3"/></svg>',
     /* Medalla con cinta (muy buen desempeño) */
     silver: '<svg viewBox="0 0 24 24" fill="none" stroke="#3b4b5c" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 3L11 10M15.5 3L13 10"/><circle cx="12" cy="15" r="6"/><path d="M12 12v6M9.5 15h5"/></svg>',
     /* Cinta / listón (desempeño aceptable) */
     bronze: '<svg viewBox="0 0 24 24" fill="none" stroke="#6b3f14" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="5.5"/><path d="M9 13.5L7 21l5-2.6L17 21l-2-7.5"/></svg>',
     /* Libro abierto (a reforzar el estudio) */
-    book: '<svg viewBox="0 0 24 24" fill="none" stroke="#003B70" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6.2c-1.7-1.1-3.6-1.7-5.6-1.9-.8-.1-1.4.5-1.4 1.3v11.6c0 .7.5 1.2 1.2 1.3 2.1.2 4.1.8 5.8 2 1.7-1.2 3.7-1.8 5.8-2 .7-.1 1.2-.6 1.2-1.3V5.6c0-.8-.6-1.4-1.4-1.3-2 .2-3.9.8-5.6 1.9z"/><path d="M12 6.2V19"/></svg>'
+    book: '<svg viewBox="0 0 24 24" fill="none" stroke="#6B1B34" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6.2c-1.7-1.1-3.6-1.7-5.6-1.9-.8-.1-1.4.5-1.4 1.3v11.6c0 .7.5 1.2 1.2 1.3 2.1.2 4.1.8 5.8 2 1.7-1.2 3.7-1.8 5.8-2 .7-.1 1.2-.6 1.2-1.3V5.6c0-.8-.6-1.4-1.4-1.3-2 .2-3.9.8-5.6 1.9z"/><path d="M12 6.2V19"/></svg>'
   };
 
   function showResults(){
