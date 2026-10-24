@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Museo Malthus UNLa</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Museo virtual interactivo sobre Thomas Malthus y el Principio de la Población. Economía Clásica, cátedra Levinton – Zurdo, Universidad Nacional de Lanús.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Display&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=Instrument+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="css/museum-theme.css">
+</head>
+<body data-env="site">
+
+<a class="skip" href="#museo">Saltar al contenido</a>
+
+<!-- ============ Barra superior: identidad + salas + controles ============ -->
+<header class="topbar" id="topbar">
+  <div class="topbar__inner">
+    <a class="brand" href="#hall" data-goto="hall" aria-label="Volver al Hall de Entrada">
+      <img src="assets/unla-logo.png" alt="Logo de la Universidad Nacional de Lanús" width="40" height="39">
+      <span class="brand__text">
+        <span class="brand__name">Museo Malthus</span>
+        <span class="brand__sub">Economía Clásica · UNLa</span>
+      </span>
+    </a>
+
+    <nav class="roomnav" aria-label="Salas del museo">
+      <ol class="roomnav__list" id="roomnav"><!-- generado por app.js --></ol>
+    </nav>
+
+    <div class="controls">
+      <button class="ctrl" id="btn-plano" type="button" aria-haspopup="dialog">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5l6-2 6 2 6-2v16l-6 2-6-2-6 2z M9 3v16 M15 5v16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+        <span>Plano</span>
+      </button>
+      <button class="ctrl" id="btn-ambiente" type="button" aria-pressed="false" title="Sonido ambiental de galería">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path class="wave" d="M16 9a4 4 0 010 6M18.5 6.5a7.5 7.5 0 010 11" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        <span>Ambiente</span>
+      </button>
+    </div>
+  </div>
+  <div class="progress" aria-hidden="true"><span id="progress-bar"></span></div>
+</header>
+
+<!-- ============ Contenedor de salas (cada <section> es una sala) ============ -->
+<main id="museo" class="museo" tabindex="-1">
+
+  <!-- HALL DE ENTRADA -->
+  <section class="sala sala--hall" id="hall" data-sala="hall" aria-labelledby="t-hall">
+    <div class="hall">
+      <div class="hall__text">
+        <img class="hall__logo" src="assets/unla-logo.png" alt="Universidad Nacional de Lanús" width="96" height="94">
+        <p class="eyebrow" data-fill="inst"></p>
+        <h1 class="hall__title" id="t-hall">Museo Virtual:<br><em>El Principio de la Población</em></h1>
+        <p class="hall__unit" data-fill="unidad"></p>
+        <p class="hall__lead" data-fill="bienvenida"></p>
+        <div class="hall__actions">
+          <a class="btn btn--primary" href="#sala-1" data-goto="sala-1" id="btn-ingresar">
+            Ingresar al Recorrido
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <button class="btn btn--ghost" type="button" data-open-plano>Ver plano del museo</button>
+        </div>
+        <dl class="hall__meta">
+          <div><dt>Cátedra</dt><dd data-fill="catedra"></dd></div>
+          <div><dt>Recorrido</dt><dd>5 salas + laboratorio</dd></div>
+          <div><dt>Duración</dt><dd>≈ 35 minutos</dd></div>
+        </dl>
+      </div>
+
+      <figure class="hall__portrait">
+        <div class="frame">
+          <img src="assets/malthus-portrait.png" alt="Retrato al óleo de Thomas Robert Malthus sentado frente a su escritorio, con libros, pluma y un globo terráqueo" width="660" height="884">
+        </div>
+        <figcaption class="label" data-fill="ficha"></figcaption>
+      </figure>
+    </div>
+    <div class="audio-slot" data-audio="hall"></div>
+  </section>
+
+  <section class="sala" id="sala-1" data-sala="sala-1" aria-labelledby="t-sala-1" hidden></section>
+  <section class="sala" id="sala-2" data-sala="sala-2" aria-labelledby="t-sala-2" hidden></section>
+  <section class="sala" id="sala-3" data-sala="sala-3" aria-labelledby="t-sala-3" hidden></section>
+  <section class="sala" id="sala-4" data-sala="sala-4" aria-labelledby="t-sala-4" hidden></section>
+  <section class="sala" id="sala-5" data-sala="sala-5" aria-labelledby="t-sala-5" hidden></section>
+  <section class="sala" id="lab"    data-sala="lab"    aria-labelledby="t-lab"    hidden></section>
+
+</main>
+
+<footer class="pie">
+  <div class="pie__inner">
+    <span>Universidad Nacional de Lanús · Departamento de Desarrollo Productivo y Tecnológico</span>
+    <span>Economía Clásica · Cátedra Levinton – Zurdo</span>
+  </div>
+</footer>
+
+<!-- ============ Plano del museo (Floor Plan) ============ -->
+<dialog class="plano" id="plano" aria-labelledby="plano-title">
+  <div class="plano__head">
+    <div>
+      <p class="eyebrow">Plano de planta</p>
+      <h2 id="plano-title">Elegí una sala</h2>
+    </div>
+    <button class="ctrl ctrl--icon" type="button" data-close-plano aria-label="Cerrar plano">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="plano__map" id="plano-map"><!-- SVG generado por app.js --></div>
+  <p class="plano__legend"><span class="dot dot--visto"></span> Sala visitada <span class="dot dot--aqui"></span> Estás aquí</p>
+</dialog>
+
+<!-- Aviso breve (toast) -->
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+<!-- Orden: datos → módulos de sala → enrutador -->
+<script src="js/museum-data.js"></script>
+<script src="js/chart-simulator.js"></script>
+<script src="js/quiz-engine.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
